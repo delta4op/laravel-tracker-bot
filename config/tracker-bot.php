@@ -75,5 +75,10 @@ return [
             'enabled' => env('TRACKER_BOT_EVENT_LISTENER', true),
             'ignore' => [],
         ],
+
+        Delta4op\Laravel\TrackerBot\Listeners\LogListener::class => [
+            'enabled' => env('TRACKER_BOT_LOG_LISTENER', true),
+            'ignore' => [],
+        ],
     ],
 ];

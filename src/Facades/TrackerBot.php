@@ -5,7 +5,7 @@ namespace Delta4op\Laravel\TrackerBot\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method bool isEnabled()
+ * @method static bool isEnabled()
  *
  * @see \Delta4op\Laravel\TrackerBot\TrackerBot
  */

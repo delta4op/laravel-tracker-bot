@@ -16,5 +16,5 @@ namespace Delta4op\Laravel\TrackerBot\DB\Models\objects;
  */
 class DbQueryObject extends EntryObject
 {
-    // todo define speed rate
+
 }

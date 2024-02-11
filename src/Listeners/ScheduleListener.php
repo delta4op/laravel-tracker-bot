@@ -2,9 +2,9 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\objects\ScheduleObject;
-use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Illuminate\Console\Events\CommandStarting;
+use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\ScheduleObject;
 
 class ScheduleListener extends Listener
 {
