@@ -2,7 +2,6 @@
 
 return [
 
-
     /**
      * The source is an optional configuration that gets added
      * to the appEntries collection in the database
