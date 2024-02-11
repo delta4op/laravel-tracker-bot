@@ -25,9 +25,10 @@ class EventListener extends Listener
      */
     public function handle($eventName, $payload): void
     {
-//        if ($this->shouldIgnore($eventName)) {
-//            return;
-//        }
+        if ($this->shouldIgnore($eventName)) {
+            return;
+        }
+
 
         $this->logEntry(
             EntryType::EVENT,
@@ -123,7 +124,10 @@ class EventListener extends Listener
      */
     protected function shouldIgnore(string $eventName): bool
     {
-        return $this->eventIsIgnored($eventName) || $this->eventIsFiredByTrackerBot($eventName);
+        return
+            $this->eventIsIgnored($eventName) ||
+            $this->eventIsFiredByTheFramework($eventName) ||
+            $this->eventIsFiredByTrackerBot($eventName);
     }
 
     /**
