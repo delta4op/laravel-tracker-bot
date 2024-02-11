@@ -4,9 +4,9 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\AppErrorObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Support\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
-use Laravel\Telescope\ExceptionContext;
 use Throwable;
 
 class AppErrorListener extends Listener
@@ -42,7 +42,7 @@ class AppErrorListener extends Listener
         $object->message = $exception->getMessage();
         $object->trace = $trace;
         $object->linePreview = ExceptionContext::get($exception);
-        $object->context = transform(Arr::except($event->context, ['exception', 'telescope']), function ($context) {
+        $object->context = transform(Arr::except($event->context, ['exception', 'trackerbot']), function ($context) {
             return ! empty($context) ? $context : null;
         });
 

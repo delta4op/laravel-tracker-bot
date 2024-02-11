@@ -127,11 +127,11 @@ class AppRequestListener extends Listener
                 json_last_error() === JSON_ERROR_NONE) {
                 return $this->contentWithinLimits($content)
                     ? $this->hideParameters(json_decode($content, true), [])
-                    : 'Purged By Telescope';
+                    : 'Purged By Tracker bot';
             }
 
             if (Str::startsWith(strtolower($response->headers->get('Content-Type') ?? ''), 'text/plain')) {
-                return $this->contentWithinLimits($content) ? $content : 'Purged By Telescope';
+                return $this->contentWithinLimits($content) ? $content : 'Purged By TrackerBot';
             }
         }
 

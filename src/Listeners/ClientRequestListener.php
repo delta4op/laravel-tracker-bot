@@ -9,7 +9,6 @@ use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Laravel\Telescope\Telescope;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -69,12 +68,12 @@ class ClientRequestListener extends Listener
             if (is_array(json_decode($content, true)) &&
                 json_last_error() === JSON_ERROR_NONE) {
                 return $this->contentWithinLimits($content)
-                    ? $this->hideParameters(json_decode($content, true), Telescope::$hiddenResponseParameters)
-                    : 'Purged By Telescope';
+                    ? $this->hideParameters(json_decode($content, true), [])
+                    : 'Purged By TrackerBot';
             }
 
             if (Str::startsWith(strtolower($response->header('Content-Type') ?? ''), 'text/plain')) {
-                return $this->contentWithinLimits($content) ? $content : 'Purged By Telescope';
+                return $this->contentWithinLimits($content) ? $content : 'Purged By TrackerBot';
             }
         }
 
@@ -107,7 +106,7 @@ class ClientRequestListener extends Listener
         $headers = array_combine($headerNames, $headerValues);
 
         return $this->hideParameters($headers,
-            Telescope::$hiddenRequestHeaders
+            $this->options['hidden'] ?? []
         );
     }
 
@@ -119,7 +118,7 @@ class ClientRequestListener extends Listener
     protected function payload($payload): array
     {
         return $this->hideParameters($payload,
-            Telescope::$hiddenRequestParameters
+            []
         );
     }
 

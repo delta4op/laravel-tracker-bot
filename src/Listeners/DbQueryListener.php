@@ -10,21 +10,23 @@ class DbQueryListener extends Listener
 {
     public function handle(QueryExecuted $event): void
     {
-        if ($this->isTelescopeQuery($event)) {
+        if ($this->isTrackerBotQuery($event)) {
             return;
         }
 
-        if ($object = $this->prepareEventObject($event)) {
-            $this->logEntry(
-                EntryType::DB_QUERY,
-                $object
-            );
-        }
+        $this->logEntry(
+            EntryType::DB_QUERY,
+            $this->prepareEventObject($event)
+        );
     }
 
-    protected function isTelescopeQuery(QueryExecuted $event): bool
+    /**
+     * @param QueryExecuted $event
+     * @return bool
+     */
+    protected function isTrackerBotQuery(QueryExecuted $event): bool
     {
-        return $event->connectionName === config('tracker-bot.storage.connection', 'tracker-bot');
+        return $event->connectionName === config('tracker-bot.storage.connection');
     }
 
     protected function prepareEventObject(QueryExecuted $event): DbQueryObject

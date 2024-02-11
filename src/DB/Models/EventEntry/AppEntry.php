@@ -3,7 +3,6 @@
 namespace Delta4op\Laravel\TrackerBot\DB\Models\EventEntry;
 
 use Carbon\Carbon;
-use Delta4op\Laravel\TrackerBot\BatchIdGenerator;
 use Delta4op\Laravel\TrackerBot\DB\Models\BaseModel;
 use Delta4op\Laravel\TrackerBot\DB\Models\common\Server;
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\AppErrorObject;
@@ -14,6 +13,7 @@ use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\DbQueryObject;
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\EntryObject;
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\ScheduleObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Support\BatchIdGenerator;
 use Illuminate\Support\Str;
 use Jenssegers\Mongodb\Relations\EmbedsOne;
 

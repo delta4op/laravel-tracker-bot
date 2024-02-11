@@ -10,8 +10,6 @@ use Illuminate\Cache\Events\CacheMissed;
 use Illuminate\Cache\Events\KeyForgotten;
 use Illuminate\Cache\Events\KeyWritten;
 use Illuminate\Support\Str;
-use Laravel\Telescope\IncomingEntry;
-use Laravel\Telescope\Telescope;
 
 class CacheListener extends Listener
 {
@@ -21,12 +19,10 @@ class CacheListener extends Listener
             return;
         }
 
-        if ($object = $this->prepareEventObject($event)) {
-            $this->logEntry(
-                EntryType::APP_ERROR,
-                $object
-            );
-        }
+        $this->logEntry(
+            EntryType::APP_ERROR,
+            $this->prepareEventObject($event)
+        );
     }
 
     protected function prepareEventObject(CacheHit|CacheMissed|KeyWritten|KeyForgotten $event): CacheObject
@@ -58,23 +54,6 @@ class CacheListener extends Listener
         }
 
         return $object;
-    }
-
-    /**
-     * Record a cache key was forgotten / removed.
-     *
-     * @return void
-     */
-    public function recordKeyForgotten(KeyForgotten $event)
-    {
-        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
-            return;
-        }
-
-        Telescope::recordCache(IncomingEntry::make([
-            'type' => 'forget',
-            'key' => $event->key,
-        ]));
     }
 
     /**
@@ -110,7 +89,7 @@ class CacheListener extends Listener
         return Str::is([
             'illuminate:queue:restart',
             'framework/schedule*',
-            'telescope:*',
+            'trackerBot:*',
         ], $event->key);
     }
 }

@@ -9,6 +9,10 @@ use Symfony\Component\Mime\Address;
 
 class MailListener extends Listener
 {
+    /**
+     * @param MessageSent $event
+     * @return void
+     */
     public function handle(MessageSent $event): void
     {
         if ($object = $this->prepareEventObject($event)) {
@@ -19,6 +23,10 @@ class MailListener extends Listener
         }
     }
 
+    /**
+     * @param MessageSent $event
+     * @return MailObject|null
+     */
     protected function prepareEventObject(MessageSent $event): ?MailObject
     {
         $object = new MailObject;
@@ -43,13 +51,13 @@ class MailListener extends Listener
      * @param  MessageSent  $event
      * @return string
      */
-    protected function getMailable($event)
+    protected function getMailable($event): string
     {
         if (isset($event->data['__laravel_notification'])) {
             return $event->data['__laravel_notification'];
         }
 
-        return $event->data['__telescope_mailable'] ?? '';
+        return $event->data['__trackerbot_mailable'] ?? '';
     }
 
     /**
@@ -61,7 +69,7 @@ class MailListener extends Listener
             return $event->data['__laravel_notification_queued'];
         }
 
-        return $event->data['__telescope_queued'] ?? false;
+        return $event->data['__trackerbot_queued'] ?? false;
     }
 
     /**

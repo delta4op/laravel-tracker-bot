@@ -7,11 +7,11 @@ use Illuminate\Support\Str;
 trait FetchesStackTrace
 {
     /**
-     * Find the first frame in the stack trace outside of Telescope/Laravel.
+     * Find the first frame in the stack trace outside of TrackerBot/Laravel.
      *
-     * @param  string|array  $forgetLines
+     * @param int|array|string $forgetLines
      */
-    protected function getCallerFromStackTrace($forgetLines = 0): ?array
+    protected function getCallerFromStackTrace(int|array|string $forgetLines = 0): ?array
     {
         $trace = collect(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS))->forget($forgetLines);
 
@@ -36,7 +36,7 @@ trait FetchesStackTrace
     }
 
     /**
-     * Choose the frame outside of either Telescope / Laravel or all packages.
+     * Choose the frame outside of either TrackerBot / Laravel or all packages.
      *
      * @return string|null
      */

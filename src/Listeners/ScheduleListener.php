@@ -8,6 +8,10 @@ use Illuminate\Console\Events\CommandStarting;
 
 class ScheduleListener extends Listener
 {
+    /**
+     * @param CommandStarting $event
+     * @return void
+     */
     public function handle(CommandStarting $event): void
     {
         if ($event->command !== 'schedule:run' &&
@@ -23,6 +27,10 @@ class ScheduleListener extends Listener
         }
     }
 
+    /**
+     * @param CommandStarting $event
+     * @return ScheduleObject|null
+     */
     protected function prepareEventObject(CommandStarting $event): ?ScheduleObject
     {
         $object = new ScheduleObject;

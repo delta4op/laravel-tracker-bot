@@ -14,15 +14,17 @@ class ConsoleCommandListener extends Listener
             return;
         }
 
-        if ($object = $this->prepareEventObject($event)) {
-            $this->logEntry(
-                EntryType::CONSOLE_COMMAND,
-                $object
-            );
-        }
+        $this->logEntry(
+            EntryType::CONSOLE_COMMAND,
+            $this->prepareEventObject($event)
+        );
     }
 
-    protected function prepareEventObject(CommandFinished $event): ?ConsoleCommandObject
+    /**
+     * @param CommandFinished $event
+     * @return ConsoleCommandObject
+     */
+    protected function prepareEventObject(CommandFinished $event): ConsoleCommandObject
     {
         $object = new ConsoleCommandObject;
 
