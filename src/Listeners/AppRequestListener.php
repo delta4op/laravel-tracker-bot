@@ -3,7 +3,7 @@
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\common\BrowserDetails;
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\AppRequestObject;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\AppRequestObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Delta4op\Laravel\TrackerBot\Support\FormatModel;
 use Illuminate\Database\Eloquent\Model;

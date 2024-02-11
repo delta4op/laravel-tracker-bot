@@ -2,9 +2,9 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Illuminate\Redis\Events\CommandExecuted;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\RedisObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\RedisObject;
+use Illuminate\Redis\Events\CommandExecuted;
 
 class RedisListener extends Listener
 {

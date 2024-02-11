@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\MailObject;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\MailObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Illuminate\Mail\Events\MessageSent;
 use Symfony\Component\Mime\Address;

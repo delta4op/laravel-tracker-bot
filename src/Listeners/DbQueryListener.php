@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\DbQueryObject;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\DbQueryObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Illuminate\Database\Events\QueryExecuted;
 

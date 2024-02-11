@@ -2,15 +2,15 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\ClientRequestObject;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\ClientRequestObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Illuminate\Http\Client\Events\ConnectionFailed;
 use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Client\Request;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\Response;
 
 class ClientRequestListener extends Listener
 {
@@ -33,7 +33,7 @@ class ClientRequestListener extends Listener
 
         if ($event instanceof ResponseReceived) {
             $object->responseStatus = $event->response->status();
-            $object->responseHeaders = $this->headers($event->response->headers->all());
+            $object->responseHeaders = $this->headers($event->response->headers());
             $object->response = $this->response($event->response);
             $object->duration = $this->duration($event->response);
         }
@@ -72,7 +72,7 @@ class ClientRequestListener extends Listener
                     : 'Purged By TrackerBot';
             }
 
-            if (Str::startsWith(strtolower($response->header('Content-Type') ?? ''), 'text/plain')) {
+            if (Str::startsWith(strtolower($response->header('Content-Type')), 'text/plain')) {
                 return $this->contentWithinLimits($content) ? $content : 'Purged By TrackerBot';
             }
         }
@@ -128,7 +128,7 @@ class ClientRequestListener extends Listener
      * @param  array  $data
      * @param  array  $hidden
      */
-    protected function hideParameters($data, $hidden): mixed
+    protected function hideParameters(array $data, array $hidden = []): mixed
     {
         foreach ($hidden as $parameter) {
             if (Arr::get($data, $parameter)) {
@@ -180,7 +180,7 @@ class ClientRequestListener extends Listener
     /**
      * Get the request duration in milliseconds.
      */
-    protected function duration(Response $response): ?int
+    protected function duration(Response $response): float|int|null
     {
         if (property_exists($response, 'transferStats') &&
             $response->transferStats &&

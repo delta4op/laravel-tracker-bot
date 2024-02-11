@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\AppErrorObject;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\AppErrorObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Delta4op\Laravel\TrackerBot\Support\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;

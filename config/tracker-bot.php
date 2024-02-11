@@ -64,5 +64,16 @@ return [
         Delta4op\Laravel\TrackerBot\Listeners\MailListener::class => [
             'enabled' => env('TRACKER_BOT_MAIL_LISTENER', true),
         ],
+
+//        Delta4op\Laravel\TrackerBot\Listeners\ModelListener::class => [
+//            'enabled' => env('TRACKER_BOT_MODEL_LISTENER', true),
+//            'events' => ['eloquent.*'],
+//            'hydrations' => true,
+//        ],
+
+        Delta4op\Laravel\TrackerBot\Listeners\EventListener::class => [
+            'enabled' => env('TRACKER_BOT_EVENT_LISTENER', true),
+            'ignore' => [],
+        ],
     ],
 ];

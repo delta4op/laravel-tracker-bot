@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\ConsoleCommandObject;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\ConsoleCommandObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Illuminate\Console\Events\CommandFinished;
 

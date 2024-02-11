@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects;
+namespace Delta4op\Laravel\TrackerBot\DB\Models\objects;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\common\BrowserDetails;
 use Jenssegers\Mongodb\Relations\EmbedsOne;

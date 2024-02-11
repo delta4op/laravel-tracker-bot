@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\CacheObject;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\CacheObject;
 use Delta4op\Laravel\TrackerBot\Enums\CacheEventType;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Illuminate\Cache\Events\CacheHit;
@@ -20,7 +20,7 @@ class CacheListener extends Listener
         }
 
         $this->logEntry(
-            EntryType::APP_ERROR,
+            EntryType::CACHE,
             $this->prepareEventObject($event)
         );
     }

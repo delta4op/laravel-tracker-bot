@@ -7,6 +7,7 @@ use Delta4op\Laravel\TrackerBot\Listeners\CacheListener;
 use Delta4op\Laravel\TrackerBot\Listeners\ClientRequestListener;
 use Delta4op\Laravel\TrackerBot\Listeners\ConsoleCommandListener;
 use Delta4op\Laravel\TrackerBot\Listeners\DbQueryListener;
+use Delta4op\Laravel\TrackerBot\Listeners\EventListener;
 use Delta4op\Laravel\TrackerBot\Listeners\MailListener;
 use Delta4op\Laravel\TrackerBot\Listeners\RedisListener;
 use Delta4op\Laravel\TrackerBot\Listeners\ScheduleListener;
@@ -46,6 +47,8 @@ class TrackerBotProvider extends PackageServiceProvider
         $this->listenDbQueries();
 
         $this->listenMails();
+
+        $this->listenEvents();
 
         if ($this->app->bound('redis')) {
             $this->listenRedis();
@@ -144,5 +147,13 @@ class TrackerBotProvider extends PackageServiceProvider
         }
 
         $this->app['redis']->enableEvents();
+    }
+
+    /**
+     * @return void
+     */
+    protected function listenEvents(): void
+    {
+        $this->app['events']->listen('*', [EventListener::class, 'handle']);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects;
+namespace Delta4op\Laravel\TrackerBot\DB\Models\objects;
 
 /**
  * @property ?string $uri
@@ -11,7 +11,7 @@ namespace Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects;
  * @property ?array $response
  * @property ?array $responseHeaders
  * @property ?int $responseStatus
- * @property ?int $duration
+ * @property ?float $duration
  */
 class ClientRequestObject extends EntryObject
 {

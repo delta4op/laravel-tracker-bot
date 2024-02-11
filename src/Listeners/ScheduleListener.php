@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\ScheduleObject;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\ScheduleObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Illuminate\Console\Events\CommandStarting;
 

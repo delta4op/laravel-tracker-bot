@@ -4,7 +4,7 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\common\Server;
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\AppEntry;
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\EntryObject;
+use Delta4op\Laravel\TrackerBot\DB\Models\objects\EntryObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Delta4op\Laravel\TrackerBot\Support\FetchesStackTrace;
 
