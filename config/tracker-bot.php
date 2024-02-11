@@ -7,19 +7,18 @@ return [
      * to the appEntries collection in the database
      *
      * The purpose is to segregate code from multiple servers or multiple projects using this key.
-    */
+     */
     'source' => 'MASTER',
 
     /**
      * If this flag is true
      * then the package will do its magic
-    */
+     */
     'enabled' => env('TRACKER_BOT_ENABLED', true),
 
     /**
      * storage configuration
-     *
-    */
+     */
     'storage' => [
         'driver' => 'database',
         'connection' => env('TRACKER_BOT_DB_CONNECTION', 'tracker-bot'),
@@ -28,7 +27,7 @@ return [
     /**
      * Listeners and their behaviors can be controller
      * from here
-    */
+     */
     'listeners' => [
         Delta4op\Laravel\TrackerBot\Listeners\AppRequestListener::class => [
             'enabled' => env('TRACKER_BOT_APP_REQUEST_LISTENER', true),

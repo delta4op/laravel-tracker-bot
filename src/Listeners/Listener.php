@@ -16,14 +16,9 @@ abstract class Listener
 
     public function __construct()
     {
-        $this->options = config("tracker-bot.listeners." . get_class(), []);
+        $this->options = config('tracker-bot.listeners.'.get_class(), []);
     }
 
-    /**
-     * @param EntryType $type
-     * @param EntryObject $eventObject
-     * @return AppEntry
-     */
     protected function logEntry(EntryType $type, EntryObject $eventObject): AppEntry
     {
         $entry = new AppEntry;
@@ -37,9 +32,6 @@ abstract class Listener
         return $entry;
     }
 
-    /**
-     * @return Server
-     */
     protected function getServer(): Server
     {
         $server = new Server;
@@ -49,7 +41,6 @@ abstract class Listener
     }
 
     /**
-     * @param $entry
      * @return void
      */
     protected function fireEntryLoggedEvent($entry)

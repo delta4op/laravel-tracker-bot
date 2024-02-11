@@ -23,12 +23,9 @@ use Jenssegers\Mongodb\Relations\EmbedsOne;
  * @property ?int $memory
  * @property ?int $hostName
  * @property ?BrowserDetails $browserDetails
-*/
+ */
 class AppRequestObject extends EntryObject
 {
-    /**
-     * @return EmbedsOne
-     */
     public function browser(): EmbedsOne
     {
         return $this->embedsOne(BrowserDetails::class);

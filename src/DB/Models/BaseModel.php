@@ -28,30 +28,22 @@ class BaseModel extends Model
         return parent::setAttribute($key, $value);
     }
 
-    /**
-     * @return bool
-     */
     public function hasAllEmptyAttributes(): bool
     {
-        foreach($this->getAttributes() as $key => $value) {
-            if(!empty($value)) {
+        foreach ($this->getAttributes() as $key => $value) {
+            if (! empty($value)) {
                 return false;
             }
         }
+
         return true;
     }
 
-    /**
-     * @return bool
-     */
     public function hasAnyValidAttribute(): bool
     {
-        return !$this->hasAllEmptyAttributes();
+        return ! $this->hasAllEmptyAttributes();
     }
 
-    /**
-     * @return mixed
-     */
     public function getConnectionName(): mixed
     {
         return config('tracker-bot.storage.connection', 'tracker-bot');

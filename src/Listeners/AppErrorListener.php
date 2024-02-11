@@ -11,10 +11,6 @@ use Throwable;
 
 class AppErrorListener extends Listener
 {
-    /**
-     * @param MessageLogged $event
-     * @return void
-     */
     public function handle(MessageLogged $event): void
     {
         if ($this->shouldIgnore($event)) {
@@ -29,11 +25,7 @@ class AppErrorListener extends Listener
         }
     }
 
-    /**
-     * @param MessageLogged $event
-     * @return AppErrorObject|null
-     */
-    protected function prepareEventObject(MessageLogged $event): AppErrorObject|null
+    protected function prepareEventObject(MessageLogged $event): ?AppErrorObject
     {
         $object = new AppErrorObject;
 
@@ -51,7 +43,7 @@ class AppErrorListener extends Listener
         $object->trace = $trace;
         $object->linePreview = ExceptionContext::get($exception);
         $object->context = transform(Arr::except($event->context, ['exception', 'telescope']), function ($context) {
-            return !empty($context) ? $context : null;
+            return ! empty($context) ? $context : null;
         });
 
         return $object;
@@ -59,12 +51,9 @@ class AppErrorListener extends Listener
 
     /**
      * Determine if the event should be ignored.
-     *
-     * @param MessageLogged $event
-     * @return bool
      */
     private function shouldIgnore(MessageLogged $event): bool
     {
-        return !isset($event->context['exception']);
+        return ! isset($event->context['exception']);
     }
 }

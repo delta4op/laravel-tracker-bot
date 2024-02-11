@@ -2,18 +2,18 @@
 
 namespace Delta4op\Laravel\TrackerBot\DB\Models\EventEntry;
 
+use Carbon\Carbon;
 use Delta4op\Laravel\TrackerBot\BatchIdGenerator;
 use Delta4op\Laravel\TrackerBot\DB\Models\BaseModel;
 use Delta4op\Laravel\TrackerBot\DB\Models\common\Server;
+use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\AppErrorObject;
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\AppRequestObject;
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\ClientRequestObject;
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\ConsoleCommandObject;
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\DbQueryObject;
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\EntryObject;
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\AppErrorObject;
 use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\ScheduleObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Jenssegers\Mongodb\Relations\EmbedsOne;
 
@@ -57,17 +57,11 @@ class AppEntry extends BaseModel
         });
     }
 
-    /**
-     * @return EmbedsOne
-     */
     public function server(): EmbedsOne
     {
         return $this->embedsOne(Server::class);
     }
 
-    /**
-     * @return EmbedsOne
-     */
     public function entryObject(): EmbedsOne
     {
         $eventTypeString = $this->attributes['eventType'] ?? null;

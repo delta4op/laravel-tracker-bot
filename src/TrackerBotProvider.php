@@ -4,7 +4,6 @@ namespace Delta4op\Laravel\TrackerBot;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Delta4op\Laravel\TrackerBot\Commands\SkeletonCommand;
 
 class TrackerBotProvider extends PackageServiceProvider
 {

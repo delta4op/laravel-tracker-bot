@@ -3,7 +3,7 @@
 namespace Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects;
 
 /**
- *  @property ?string $connection
+ * @property ?string $connection
  * @property ?array $bindings
  * @property ?string $query
  * @property ?float $time
@@ -13,9 +13,7 @@ namespace Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects;
  * @property ?string $hash
  * @property ?int $speedRate
  * @property ?boolean $slow
- *
- *
-*/
+ */
 class DbQueryObject extends EntryObject
 {
     // todo define speed rate

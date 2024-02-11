@@ -8,17 +8,13 @@ use Illuminate\Database\Events\QueryExecuted;
 
 class DbQueryListener extends Listener
 {
-    /**
-     * @param QueryExecuted $event
-     * @return void
-     */
     public function handle(QueryExecuted $event): void
     {
-        if($this->isTelescopeQuery($event)) {
+        if ($this->isTelescopeQuery($event)) {
             return;
         }
 
-        if($object = $this->prepareEventObject($event)) {
+        if ($object = $this->prepareEventObject($event)) {
             $this->logEntry(
                 EntryType::DB_QUERY,
                 $object
@@ -26,19 +22,11 @@ class DbQueryListener extends Listener
         }
     }
 
-    /**
-     * @param QueryExecuted $event
-     * @return bool
-     */
     protected function isTelescopeQuery(QueryExecuted $event): bool
     {
         return $event->connectionName === config('tracker-bot.storage.connection', 'tracker-bot');
     }
 
-    /**
-     * @param QueryExecuted $event
-     * @return DbQueryObject
-     */
     protected function prepareEventObject(QueryExecuted $event): DbQueryObject
     {
         $object = new DbQueryObject();
@@ -60,7 +48,7 @@ class DbQueryListener extends Listener
     /**
      * Get the tags for the query.
      *
-     * @param QueryExecuted $event
+     * @param  QueryExecuted  $event
      * @return array
      */
     protected function tags($event)
@@ -71,7 +59,7 @@ class DbQueryListener extends Listener
     /**
      * Calculate the family look-up hash for the query event.
      *
-     * @param QueryExecuted $event
+     * @param  QueryExecuted  $event
      * @return string
      */
     public function familyHash($event)
@@ -82,7 +70,7 @@ class DbQueryListener extends Listener
     /**
      * Format the given bindings to strings.
      *
-     * @param QueryExecuted $event
+     * @param  QueryExecuted  $event
      * @return array
      */
     protected function formatBindings($event)
@@ -93,7 +81,7 @@ class DbQueryListener extends Listener
     /**
      * Replace the placeholders with the actual bindings.
      *
-     * @param QueryExecuted $event
+     * @param  QueryExecuted  $event
      * @return string
      */
     public function replaceBindings($event)
@@ -107,7 +95,7 @@ class DbQueryListener extends Listener
 
             if ($binding === null) {
                 $binding = 'null';
-            } elseif (!is_int($binding) && !is_float($binding)) {
+            } elseif (! is_int($binding) && ! is_float($binding)) {
                 $binding = $this->quoteStringBinding($event, $binding);
             }
 
@@ -120,8 +108,8 @@ class DbQueryListener extends Listener
     /**
      * Add quotes to string bindings.
      *
-     * @param QueryExecuted $event
-     * @param string $binding
+     * @param  QueryExecuted  $event
+     * @param  string  $binding
      * @return string
      */
     protected function quoteStringBinding($event, $binding)
@@ -129,7 +117,7 @@ class DbQueryListener extends Listener
         try {
             return $event->connection->getPdo()->quote($binding);
         } catch (\PDOException $e) {
-            throw_if('IM001' !== $e->getCode(), $e);
+            throw_if($e->getCode() !== 'IM001', $e);
         }
 
         // Fallback when PDO::quote function is missing...
@@ -141,6 +129,6 @@ class DbQueryListener extends Listener
             '\\' => '\\\\',
         ]);
 
-        return "'" . $binding . "'";
+        return "'".$binding."'";
     }
 }

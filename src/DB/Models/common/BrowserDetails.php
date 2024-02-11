@@ -30,9 +30,6 @@ use hisorange\BrowserDetect\Facade as Browser;
  */
 class BrowserDetails extends EmbeddedModel
 {
-    /**
-     * @return static
-     */
     public static function autoInit(): static
     {
         $instance = new self;
@@ -41,19 +38,19 @@ class BrowserDetails extends EmbeddedModel
         $instance->deviceModel = Browser::deviceModel();
         $instance->deviceFamily = Browser::deviceFamily();
         $instance->browserName = Browser::browserName();
-        if(Browser::isChrome()) {
+        if (Browser::isChrome()) {
             $instance->browserType = BrowserType::CHROME;
-        } else if(Browser::isEdge()) {
+        } elseif (Browser::isEdge()) {
             $instance->browserType = BrowserType::EDGE;
-        } else if(Browser::isSafari()) {
+        } elseif (Browser::isSafari()) {
             $instance->browserType = BrowserType::SAFARI;
-        } else if(Browser::isFirefox()) {
+        } elseif (Browser::isFirefox()) {
             $instance->browserType = BrowserType::FIREFOX;
-        } else if(Browser::isOpera()) {
+        } elseif (Browser::isOpera()) {
             $instance->browserType = BrowserType::OPERA;
-        } else if(Browser::isInApp()) {
+        } elseif (Browser::isInApp()) {
             $instance->browserType = BrowserType::IN_APP;
-        } else if(Browser::isIE()) {
+        } elseif (Browser::isIE()) {
             $instance->browserType = BrowserType::INTERNET_EXPLORER;
         }
 
@@ -61,13 +58,13 @@ class BrowserDetails extends EmbeddedModel
         $instance->browserVersion = Browser::browserVersion();
         $instance->browserFamily = Browser::browserFamily();
 
-        if(Browser::isAndroid()) {
+        if (Browser::isAndroid()) {
             $instance->os = OperatingSystem::ANDROID;
-        } else if(Browser::isMac()) {
+        } elseif (Browser::isMac()) {
             $instance->os = OperatingSystem::MAC;
-        } else if(Browser::isWindows()) {
+        } elseif (Browser::isWindows()) {
             $instance->os = OperatingSystem::WINDOWS;
-        } else if(Browser::isLinux()) {
+        } elseif (Browser::isLinux()) {
             $instance->os = OperatingSystem::LINUX;
         }
 

@@ -9,10 +9,6 @@ use Symfony\Component\Mime\Address;
 
 class MailListener extends Listener
 {
-    /**
-     * @param MessageSent $event
-     * @return void
-     */
     public function handle(MessageSent $event): void
     {
         if ($object = $this->prepareEventObject($event)) {
@@ -23,11 +19,7 @@ class MailListener extends Listener
         }
     }
 
-    /**
-     * @param MessageSent $event
-     * @return MailObject|null
-     */
-    protected function prepareEventObject(MessageSent $event): MailObject|null
+    protected function prepareEventObject(MessageSent $event): ?MailObject
     {
         $object = new MailObject;
 
@@ -48,7 +40,7 @@ class MailListener extends Listener
     /**
      * Get the name of the mailable.
      *
-     * @param MessageSent $event
+     * @param  MessageSent  $event
      * @return string
      */
     protected function getMailable($event)
@@ -62,9 +54,6 @@ class MailListener extends Listener
 
     /**
      * Determine whether the mailable was queued.
-     *
-     * @param MessageSent $event
-     * @return bool
      */
     protected function getQueuedStatus(MessageSent $event): bool
     {
@@ -77,9 +66,6 @@ class MailListener extends Listener
 
     /**
      * Convert the given addresses into a readable format.
-     *
-     * @param array|null $addresses
-     * @return array|null
      */
     protected function formatAddresses(?array $addresses): ?array
     {

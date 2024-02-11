@@ -15,10 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClientRequestListener extends Listener
 {
-    /**
-     * @param ResponseReceived|ConnectionFailed $event
-     * @return void
-     */
     public function handle(ResponseReceived|ConnectionFailed $event): void
     {
         $this->logEntry(
@@ -27,10 +23,6 @@ class ClientRequestListener extends Listener
         );
     }
 
-    /**
-     * @param ResponseReceived|ConnectionFailed $event
-     * @return ClientRequestObject
-     */
     protected function prepareEventObject(ResponseReceived|ConnectionFailed $event): ClientRequestObject
     {
         $object = new ClientRequestObject;
@@ -40,7 +32,7 @@ class ClientRequestListener extends Listener
         $object->input = $this->payload($this->input($event->request));
         $object->content = $event->request->body();
 
-        if($event instanceof ResponseReceived) {
+        if ($event instanceof ResponseReceived) {
             $object->responseStatus = $event->response->status();
             $object->responseHeaders = $this->headers($event->response->headers->all());
             $object->response = $this->response($event->response);
@@ -52,9 +44,6 @@ class ClientRequestListener extends Listener
 
     /**
      * Determine if the content is within the set limits.
-     *
-     * @param string $content
-     * @return bool
      */
     public function contentWithinLimits(string $content): bool
     {
@@ -65,9 +54,6 @@ class ClientRequestListener extends Listener
 
     /**
      * Format the given response object.
-     *
-     * @param  \Illuminate\Http\Client\Response  $response
-     * @return array|string
      */
     protected function response(\Illuminate\Http\Client\Response $response): array|string
     {
@@ -107,7 +93,6 @@ class ClientRequestListener extends Listener
      * Format the given headers.
      *
      * @param  array  $headers
-     * @return array
      */
     protected function headers($headers): array
     {
@@ -130,7 +115,6 @@ class ClientRequestListener extends Listener
      * Format the given payload.
      *
      * @param  array  $payload
-     * @return array
      */
     protected function payload($payload): array
     {
@@ -144,7 +128,6 @@ class ClientRequestListener extends Listener
      *
      * @param  array  $data
      * @param  array  $hidden
-     * @return mixed
      */
     protected function hideParameters($data, $hidden): mixed
     {
@@ -159,9 +142,6 @@ class ClientRequestListener extends Listener
 
     /**
      * Extract the input from the given request.
-     *
-     * @param  Request  $request
-     * @return array
      */
     protected function input(Request $request): array
     {
@@ -200,9 +180,6 @@ class ClientRequestListener extends Listener
 
     /**
      * Get the request duration in milliseconds.
-     *
-     * @param Response $response
-     * @return int|null
      */
     protected function duration(Response $response): ?int
     {

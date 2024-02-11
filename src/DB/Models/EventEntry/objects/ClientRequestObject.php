@@ -12,7 +12,7 @@ namespace Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects;
  * @property ?array $responseHeaders
  * @property ?int $responseStatus
  * @property ?int $duration
-*/
+ */
 class ClientRequestObject extends EntryObject
 {
 }

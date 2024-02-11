@@ -11,9 +11,6 @@ class BatchIdGenerator
         $this->uuid = $uuid;
     }
 
-    /**
-     * @return string
-     */
     public function getUuid(): string
     {
         return $this->uuid;

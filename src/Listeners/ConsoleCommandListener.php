@@ -2,23 +2,19 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
+use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\ConsoleCommandObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
 use Illuminate\Console\Events\CommandFinished;
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\ConsoleCommandObject;
 
 class ConsoleCommandListener extends Listener
 {
-    /**
-     * @param CommandFinished $event
-     * @return void
-     */
     public function handle(CommandFinished $event): void
     {
-        if($this->shouldIgnore($event)) {
+        if ($this->shouldIgnore($event)) {
             return;
         }
 
-        if($object = $this->prepareEventObject($event)) {
+        if ($object = $this->prepareEventObject($event)) {
             $this->logEntry(
                 EntryType::CONSOLE_COMMAND,
                 $object
@@ -26,11 +22,7 @@ class ConsoleCommandListener extends Listener
         }
     }
 
-    /**
-     * @param CommandFinished $event
-     * @return ConsoleCommandObject|null
-     */
-    protected function prepareEventObject(CommandFinished $event): ConsoleCommandObject|null
+    protected function prepareEventObject(CommandFinished $event): ?ConsoleCommandObject
     {
         $object = new ConsoleCommandObject;
 
@@ -44,9 +36,6 @@ class ConsoleCommandListener extends Listener
 
     /**
      * Determine if the event should be ignored.
-     *
-     * @param  CommandFinished $event
-     * @return bool
      */
     private function shouldIgnore(CommandFinished $event): bool
     {

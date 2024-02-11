@@ -6,10 +6,6 @@ use Illuminate\Support\Str;
 
 class Helpers
 {
-    /**
-     * @param string $file
-     * @return bool
-     */
     public static function isInternalFile(string $file): bool
     {
         return Str::startsWith($file, base_path('vendor'.DIRECTORY_SEPARATOR.'laravel'.DIRECTORY_SEPARATOR.'pulse'))

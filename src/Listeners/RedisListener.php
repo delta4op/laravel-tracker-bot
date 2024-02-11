@@ -2,15 +2,12 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
+use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\RedisObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
-use Illuminate\Redis\Events\CommandExecuted;use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\objects\RedisObject;
+use Illuminate\Redis\Events\CommandExecuted;
 
 class RedisListener extends Listener
 {
-    /**
-     * @param CommandExecuted $event
-     * @return void
-     */
     public function handle(CommandExecuted $event): void
     {
         if ($this->shouldIgnore($event)) {
@@ -23,26 +20,18 @@ class RedisListener extends Listener
         );
     }
 
-    /**
-     * @param CommandExecuted $event
-     * @return RedisObject
-     */
     protected function prepareEventObject(CommandExecuted $event): RedisObject
     {
         $object = new RedisObject;
         $object->connection = $event->connectionName;
         $object->command = $this->formatCommand($event->command, $event->parameters);
-        $object->time =  number_format($event->time, 2, '.', '');
+        $object->time = number_format($event->time, 2, '.', '');
 
         return $object;
     }
 
     /**
      * Format the given Redis command.
-     *
-     * @param string $command
-     * @param array $parameters
-     * @return string
      */
     private function formatCommand(string $command, array $parameters): string
     {
@@ -65,9 +54,6 @@ class RedisListener extends Listener
 
     /**
      * Determine if the event should be ignored.
-     *
-     * @param  mixed  $event
-     * @return bool
      */
     private function shouldIgnore(mixed $event): bool
     {

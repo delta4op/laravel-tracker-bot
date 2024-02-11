@@ -18,10 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AppRequestListener extends Listener
 {
-    /**
-     * @param RequestHandled $event
-     * @return void
-     */
     public function handle(RequestHandled $event): void
     {
         $this->logEntry(
@@ -30,10 +26,6 @@ class AppRequestListener extends Listener
         );
     }
 
-    /**
-     * @param RequestHandled $event
-     * @return AppRequestObject
-     */
     protected function prepareEventObject(RequestHandled $event): AppRequestObject
     {
         $startTime = defined('LARAVEL_START') ? LARAVEL_START : $event->request->server('REQUEST_TIME_FLOAT');
@@ -64,9 +56,6 @@ class AppRequestListener extends Listener
 
     /**
      * Get headers to be saved in request objects.
-     *
-     * @param array $headers
-     * @return array
      */
     protected function headers(array $headers): array
     {
@@ -79,10 +68,6 @@ class AppRequestListener extends Listener
 
     /**
      * Hide the given parameters.
-     *
-     * @param  array  $data
-     * @param  array  $hidden
-     * @return array
      */
     protected function hideParameters(array $data, array $hidden): array
     {
@@ -97,9 +82,6 @@ class AppRequestListener extends Listener
 
     /**
      * Format the given payload.
-     *
-     * @param array $payload
-     * @return array
      */
     protected function payload(array $payload): array
     {
@@ -110,9 +92,6 @@ class AppRequestListener extends Listener
 
     /**
      * Extract the input from the given request.
-     *
-     * @param Request $request
-     * @return array
      */
     private function input(Request $request): array
     {
@@ -130,22 +109,14 @@ class AppRequestListener extends Listener
 
     /**
      * Extract the session variables from the given request.
-     *
-     * @param Request $request
-     * @return array
      */
     private function sessionVariables(Request $request): array
     {
         return $request->hasSession() ? $request->session()->all() : [];
     }
 
-
-
     /**
      * Format the given response object.
-     *
-     * @param Response $response
-     * @return array|string
      */
     protected function response(Response $response): array|string
     {
@@ -184,9 +155,6 @@ class AppRequestListener extends Listener
 
     /**
      * Determine if the content is within the set limits.
-     *
-     * @param  string  $content
-     * @return bool
      */
     public function contentWithinLimits(string $content): bool
     {
@@ -197,9 +165,6 @@ class AppRequestListener extends Listener
 
     /**
      * Extract the data from the given view in array form.
-     *
-     * @param View $view
-     * @return array
      */
     protected function extractDataFromView(View $view): array
     {
