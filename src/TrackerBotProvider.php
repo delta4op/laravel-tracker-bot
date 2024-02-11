@@ -2,6 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot;
 
+use Delta4op\Laravel\TrackerBot\Listeners\AppErrorListener;
 use Delta4op\Laravel\TrackerBot\Listeners\AppRequestListener;
 use Delta4op\Laravel\TrackerBot\Listeners\CacheListener;
 use Delta4op\Laravel\TrackerBot\Listeners\ClientRequestListener;
@@ -79,7 +80,7 @@ class TrackerBotProvider extends PackageServiceProvider
      */
     protected function listenAppErrors(): void
     {
-        Event::listen(MessageLogged::class);
+        Event::listen(MessageLogged::class, AppErrorListener::class);
     }
 
     /**
