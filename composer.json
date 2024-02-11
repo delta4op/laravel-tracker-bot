@@ -1,12 +1,11 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "delta4op/laravel-tracker-bot",
+    "description": "Laravel Tracker Bot, a moloquent package, provides insight into the requests coming into your application, exceptions, log entries, database queries, queued jobs, mail, notifications, cache operations, scheduled tasks, variable dumps, and more.",
     "keywords": [
-        ":vendor_name",
-        "laravel",
-        ":package_slug"
+        "delta4op",
+        "laravel-tracker-bot"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/gitwithravish/laravel-tracker-bot",
     "license": "MIT",
     "authors": [
         {
@@ -35,14 +34,12 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Delta4op\\Laravel\\TrackerBot\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
-            "Workbench\\App\\": "workbench/app/"
+            "Delta4op\\Laravel\\TrackerBot\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -73,10 +70,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "LaravelBotProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Skeleton": "TrackerBot"
             }
         }
     },
