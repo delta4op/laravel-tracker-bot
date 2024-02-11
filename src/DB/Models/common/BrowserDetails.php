@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot\DB\Models\common;
 
-use App\DB\Models\EmbeddedModel;
+use Delta4op\Laravel\TrackerBot\DB\Models\BaseModel;
 use Delta4op\Laravel\TrackerBot\Enums\BrowserType;
 use Delta4op\Laravel\TrackerBot\Enums\OperatingSystem;
 use hisorange\BrowserDetect\Facade as Browser;
@@ -28,7 +28,7 @@ use hisorange\BrowserDetect\Facade as Browser;
  * @property ?string $clientId
  * @property ?array<string> $clientIps
  */
-class BrowserDetails extends EmbeddedModel
+class BrowserDetails extends BaseModel
 {
     public static function autoInit(): static
     {
