@@ -6,6 +6,6 @@ class TrackerBot
 {
     public static function isEnabled()
     {
-        return config('tracker-bot.');
+        return config('tracker-bot.enabled', false);
     }
 }

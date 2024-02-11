@@ -70,7 +70,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LaravelBotProvider"
+                "TrackerBotProvider"
             ],
             "aliases": {
                 "Skeleton": "TrackerBot"
