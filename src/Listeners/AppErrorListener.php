@@ -4,6 +4,7 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\AppErrorObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Delta4op\Laravel\TrackerBot\Support\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
@@ -13,7 +14,7 @@ class AppErrorListener extends Listener
 {
     public function handle(MessageLogged $event): void
     {
-        if ($this->shouldIgnore($event)) {
+        if (!TrackerBot::isEnabled() || $this->shouldIgnore($event)) {
             return;
         }
 

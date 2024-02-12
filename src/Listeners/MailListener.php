@@ -4,6 +4,7 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\MailObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Illuminate\Mail\Events\MessageSent;
 use Symfony\Component\Mime\Address;
 
@@ -15,12 +16,14 @@ class MailListener extends Listener
      */
     public function handle(MessageSent $event): void
     {
-        if ($object = $this->prepareEventObject($event)) {
-            $this->logEntry(
-                EntryType::MAIL,
-                $object
-            );
+        if(!TrackerBot::isEnabled()) {
+            return;
         }
+
+        $this->logEntry(
+            EntryType::MAIL,
+            $this->prepareEventObject($event)
+        );
     }
 
     /**
@@ -48,10 +51,10 @@ class MailListener extends Listener
     /**
      * Get the name of the mailable.
      *
-     * @param  MessageSent  $event
+     * @param MessageSent $event
      * @return string
      */
-    protected function getMailable($event): string
+    protected function getMailable(MessageSent $event): string
     {
         if (isset($event->data['__laravel_notification'])) {
             return $event->data['__laravel_notification'];

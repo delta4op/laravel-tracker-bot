@@ -5,6 +5,7 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\CacheObject;
 use Delta4op\Laravel\TrackerBot\Enums\CacheEventType;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Illuminate\Cache\Events\CacheHit;
 use Illuminate\Cache\Events\CacheMissed;
 use Illuminate\Cache\Events\KeyForgotten;
@@ -15,7 +16,7 @@ class CacheListener extends Listener
 {
     public function handle(CacheHit|CacheMissed|KeyWritten|KeyForgotten $event): void
     {
-        if ($this->shouldIgnore($event)) {
+        if (!TrackerBot::isEnabled() || $this->shouldIgnore($event)) {
             return;
         }
 

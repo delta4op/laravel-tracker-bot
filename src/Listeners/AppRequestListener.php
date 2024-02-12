@@ -5,6 +5,7 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 use Delta4op\Laravel\TrackerBot\DB\Models\common\BrowserDetails;
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\AppRequestObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Delta4op\Laravel\TrackerBot\Support\FormatModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\Events\RequestHandled;
@@ -20,6 +21,10 @@ class AppRequestListener extends Listener
 {
     public function handle(RequestHandled $event): void
     {
+        if(!TrackerBot::isEnabled()) {
+            return;
+        }
+
         $this->logEntry(
             EntryType::APP_REQUEST,
             $this->prepareEventObject($event)

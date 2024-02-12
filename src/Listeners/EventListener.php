@@ -4,6 +4,7 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Closure;
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\EventObject;
+use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Delta4op\Laravel\TrackerBot\Support\ExtractProperties;
 use Delta4op\Laravel\TrackerBot\Support\FormatsClosure;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,7 +26,7 @@ class EventListener extends Listener
      */
     public function handle($eventName, $payload): void
     {
-        if ($this->shouldIgnore($eventName)) {
+        if (!TrackerBot::isEnabled() || $this->shouldIgnore($eventName)) {
             return;
         }
 

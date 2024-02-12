@@ -4,6 +4,7 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\ClientRequestObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Illuminate\Http\Client\Events\ConnectionFailed;
 use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Client\Request;
@@ -16,6 +17,10 @@ class ClientRequestListener extends Listener
 {
     public function handle(ResponseReceived|ConnectionFailed $event): void
     {
+        if(!TrackerBot::isEnabled()) {
+            return;
+        }
+
         $this->logEntry(
             EntryType::CLIENT_REQUEST,
             $this->prepareEventObject($event)

@@ -4,13 +4,14 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\RedisObject;
 use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Illuminate\Redis\Events\CommandExecuted;
 
 class RedisListener extends Listener
 {
     public function handle(CommandExecuted $event): void
     {
-        if ($this->shouldIgnore($event)) {
+        if (!TrackerBot::isEnabled() || $this->shouldIgnore($event)) {
             return;
         }
 

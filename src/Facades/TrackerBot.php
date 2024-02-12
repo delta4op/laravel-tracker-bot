@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static bool isEnabled()
+ * @method static bool isDisabled()
  *
  * @see \Delta4op\Laravel\TrackerBot\TrackerBot
  */
