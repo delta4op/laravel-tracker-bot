@@ -38,10 +38,14 @@ class AppRequestListener extends Listener
         $object->middleware = array_values($event->request->route()?->gatherMiddleware() ?? []);
         $object->method = $event->request->getMethod();
         $object->headers = $this->headers($event->request->headers->all());
+        $object->host = $event->request->host();
+        $object->getScheme = $event->request->getScheme();
+        $object->path = $event->request->path();
 
         $object->responseStatus = $event->response->getStatusCode();
         $object->responseHeaders = $this->headers($event->response->headers->all());
-        $object->response = $this->response($event->response);
+        $object->response = $event->response->getContent();
+        // $object->response = $this->response($event->response));
 
         $object->content = (string) $event->request->getContent();
         $object->input = $this->payload($this->input($event->request));

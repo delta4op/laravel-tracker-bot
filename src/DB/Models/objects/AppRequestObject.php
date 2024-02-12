@@ -13,10 +13,13 @@ use Jenssegers\Mongodb\Relations\EmbedsOne;
  * @property ?string $controllerAction
  * @property ?string[] $middleware
  * @property ?array $headers
+ * @property ?string $host
+ * @property ?string $getScheme
+ * @property ?string $path
  * @property ?string $content
  * @property ?array $input
  * @property ?array $session
- * @property ?array $response
+ * @property ?string $response
  * @property ?array $responseHeaders
  * @property ?int $responseStatus
  * @property ?int $duration
