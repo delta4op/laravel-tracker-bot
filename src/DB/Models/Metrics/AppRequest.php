@@ -59,6 +59,11 @@ class AppRequest extends MetricsModel
      */
     public function calculateFamilyHash(): string
     {
-        return 'unset';
+        return md5(
+            ($this->secure ? 'secure' : 'not-secure') .
+            ($this->method?->value ?? '') .
+            ($this->full_url ?? '')
+            ($this->content ?? '')
+        );
     }
 }

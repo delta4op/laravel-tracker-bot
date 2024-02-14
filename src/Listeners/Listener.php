@@ -16,7 +16,7 @@ abstract class Listener
 
     public function __construct()
     {
-        $this->options = config('tracker-bot.listeners.'.get_class(), []);
+        $this->options = config('tracker-bot.listeners.'.get_called_class(), []);
     }
 
     /**

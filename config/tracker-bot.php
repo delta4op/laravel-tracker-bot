@@ -29,7 +29,7 @@ return [
      */
     'storage' => [
         'database' => [
-            'connection' => env('TRACKER_BOT_DB_CONNECTION', 'tracker-bot'),
+            'connection' => env('TRACKER_BOT_DB_CONNECTION', 'tracker'),
         ],
     ],
 
