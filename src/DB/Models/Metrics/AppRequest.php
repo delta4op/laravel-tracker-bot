@@ -11,10 +11,13 @@ use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
 
 /**
  * @property ?string $protocol
+ * @property ?boolean $secure
  * @property ?HttpMethod $method
  * @property ?string $host
  * @property ?string $path
  * @property ?string $url
+ * @property ?string $full_url
+ * @property ?string $query_string
  * @property ?string $ip
  * @property ?string[] $ips
  * @property ?string[] $middleware

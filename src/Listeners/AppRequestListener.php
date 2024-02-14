@@ -33,11 +33,14 @@ class AppRequestListener extends Listener
         $startTime = defined('LARAVEL_START') ? LARAVEL_START : $event->request->server('REQUEST_TIME_FLOAT');
 
         $appRequest = new AppRequest;
-        $appRequest->protocol = RequestProtocol::tryFrom(Str::upper($event->request->getProtocolVersion()));
+        $appRequest->secure = $event->request->secure();
+        $appRequest->protocol = Str::upper($event->request->getProtocolVersion());
         $appRequest->method = HttpMethod::tryFrom(Str::upper($event->request->getMethod()));
         $appRequest->host = $event->request->host();
         $appRequest->path = $event->request->path();
         $appRequest->url = $event->request->url();
+        $appRequest->full_url = $event->request->fullUrlWithQuery();
+        $appRequest->query_string = $event->request->getQueryString();
         $appRequest->ip = $event->request->ip();
         $appRequest->ips = $event->request->ips();
         $appRequest->middleware = array_values($event->request->route()?->gatherMiddleware() ?? []);

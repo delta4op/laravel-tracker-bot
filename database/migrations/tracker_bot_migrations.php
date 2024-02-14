@@ -103,11 +103,14 @@ return new class extends Migration
             $this->commonTableConfigurationForMetrics($table);
 
             // request data
-            $table->string('protocol')->nullable();
+            $table->boolean('secure');
+            $table->string('protocol');
             $table->enum('method', HttpMethod::values());
             $table->string('host');
             $table->string('path');
             $table->string('url');
+            $table->text('full_url');
+            $table->text('query_string');
             $table->ipAddress('ip');
             $table->jsonb('ips');
             $table->jsonb('middleware');
