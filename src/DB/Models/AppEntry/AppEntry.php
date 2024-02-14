@@ -2,7 +2,6 @@
 
 namespace Delta4op\Laravel\TrackerBot\DB\Models\AppEntry;
 
-use Carbon\Carbon;
 use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
 use Delta4op\Laravel\TrackerBot\DB\EloquentBuilders\AppEntryEB;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
@@ -18,6 +17,9 @@ use Illuminate\Support\Str;
  * @property ?string $batchId
  * @property ?int $source_id
  * @property ?int $env_id
+ * @property ?string $model_key
+ * @property ?string $model_id
+ * @property ?string $familyHash
  *
  * @method AppEntryEB query()
  */

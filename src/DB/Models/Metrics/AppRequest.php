@@ -1,19 +1,14 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
+namespace Delta4op\Laravel\TrackerBot\DB\Models\Metrics;
 
 use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
 use Delta4op\Laravel\TrackerBot\DB\Concerns\MetricsModel;
 use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
 use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
-use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
-use Delta4op\Laravel\TrackerBot\Enums\HttpContentType;
 use Delta4op\Laravel\TrackerBot\Enums\RequestProtocol;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Str;
 
 /**
@@ -67,6 +62,15 @@ class AppRequest extends MetricsModel
     {
         static::creating(function (AppRequest $appRequest) {
             $appRequest->uuid = Str::orderedUuid()->toString();
+            $appRequest->setFamilyHash();
         });
+    }
+
+    /**
+     * @return string
+     */
+    public function calculateFamilyHash(): string
+    {
+        return 'unset';
     }
 }

@@ -2,9 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest\AppRequest;
-use Delta4op\Laravel\TrackerBot\DB\Models\objects\AppRequestObject;
-use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
 use Delta4op\Laravel\TrackerBot\Enums\RequestProtocol;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;

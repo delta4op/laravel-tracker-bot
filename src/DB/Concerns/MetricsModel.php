@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property ?Source $source
  * @property ?Environment $env
  */
-class MetricsModel extends Model
+abstract class MetricsModel extends Model
 {
     use HasTimestamps;
 
@@ -49,4 +49,18 @@ class MetricsModel extends Model
     {
         return $this->belongsTo(Source::class, 'env_id', 'id');
     }
+
+    /**
+     * @return $this
+     */
+    public function setFamilyHash(): static
+    {
+        $this->family_hash = $this->calculateFamilyHash();
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public abstract function calculateFamilyHash(): string;
 }

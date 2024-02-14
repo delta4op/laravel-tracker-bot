@@ -4,7 +4,7 @@ namespace Delta4op\Laravel\TrackerBot\DB\Models\Environment;
 
 use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
 use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest\AppRequest;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

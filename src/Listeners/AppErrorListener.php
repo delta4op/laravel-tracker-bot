@@ -2,8 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\objects\AppErrorObject;
-use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppError;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Delta4op\Laravel\TrackerBot\Support\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;
@@ -12,23 +11,26 @@ use Throwable;
 
 class AppErrorListener extends Listener
 {
+    /**
+     * @param MessageLogged $event
+     * @return void
+     */
     public function handle(MessageLogged $event): void
     {
         if (!TrackerBot::isEnabled() || $this->shouldIgnore($event)) {
             return;
         }
 
-//        if ($object = $this->prepareEventObject($event)) {
-//            $this->recordEntry(
-//                AppEntryType::APP_ERROR,
-//                $object
-//            );
-//        }
+        $this->recordEntry($this->prepareAppError($event));
     }
 
-    protected function prepareEventObject(MessageLogged $event): ?AppErrorObject
+    /**
+     * @param MessageLogged $event
+     * @return AppError|null
+     */
+    protected function prepareAppError(MessageLogged $event): ?AppError
     {
-        $object = new AppErrorObject;
+        $appError = new AppError;
 
         /** @var Throwable $exception */
         $exception = $event->context['exception'];
@@ -37,17 +39,18 @@ class AppErrorListener extends Listener
             return Arr::only($item, ['file', 'line']);
         })->toArray();
 
-        $object->class = get_class($exception);
-        $object->file = $exception->getFile();
-        $object->line = $exception->getLine();
-        $object->message = $exception->getMessage();
-        $object->trace = $trace;
-        $object->linePreview = ExceptionContext::get($exception);
-        $object->context = transform(Arr::except($event->context, ['exception', 'trackerbot']), function ($context) {
+        $appError->class = get_class($exception);
+        $appError->file = $exception->getFile();
+        $appError->line = $exception->getLine();
+        $appError->code = (string) $exception->getCode();
+        $appError->message = $exception->getMessage();
+        $appError->trace = $trace;
+        $appError->linePreview = ExceptionContext::get($exception);
+        $appError->context = transform(Arr::except($event->context, ['exception', 'trackerbot']), function ($context) {
             return ! empty($context) ? $context : null;
         });
 
-        return $object;
+        return $appError;
     }
 
     /**

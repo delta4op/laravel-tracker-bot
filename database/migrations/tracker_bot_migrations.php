@@ -2,7 +2,8 @@
 
 use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
 use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest\AppRequest;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppError;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
 use Delta4op\Laravel\TrackerBot\Enums\RequestProtocol;
@@ -22,6 +23,7 @@ return new class extends Migration
         $this->environmentSchema();
         $this->appEntriesSchema();
         $this->appRequestsSchema();
+        $this->appErrorSchema();
     }
 
     /**
@@ -31,6 +33,7 @@ return new class extends Migration
     {
         $this->schemaBuilder()->dropIfExists((new AppEntry)->getTable());
         $this->schemaBuilder()->dropIfExists((new AppRequest)->getTable());
+        $this->schemaBuilder()->dropIfExists((new AppError())->getTable());
         $this->schemaBuilder()->dropIfExists((new Environment)->getTable());
         $this->schemaBuilder()->dropIfExists((new Source)->getTable());
     }
@@ -96,26 +99,9 @@ return new class extends Migration
      */
     protected function appRequestsSchema(): void
     {
-        $this->schemaBuilder()->create((new AppRequest())->getTable(), function (Blueprint $table) {
+        $this->schemaBuilder()->create((new AppRequest)->getTable(), function (Blueprint $table) {
 
-            // ids
-            $table->bigIncrements('id');
-            $table->uuid();
-            $table->string('family_hash');
-
-            // relation - app_entries
-            $table->bigInteger('entry_id');
-            $table->foreign('entry_id')->references('id')->on((new AppEntry)->getTable());
-            $table->uuid('entry_uuid');
-            $table->uuid('batch_id');
-
-            // relation - sources
-            $table->unsignedTinyInteger('source_id');
-            $table->foreign('source_id')->references('id')->on((new Source)->getTable());
-
-            // relation - environments
-            $table->unsignedTinyInteger('env_id');
-            $table->foreign('env_id')->references('id')->on((new Environment)->getTable());
+            $this->commonTableConfigurationForMetrics($table);
 
             // request data
             $table->enum('protocol', RequestProtocol::values())->nullable();
@@ -147,6 +133,55 @@ return new class extends Migration
             // timestamps
             $table->timestamps();
         });
+    }
+
+    /**
+     * @return void
+     */
+    protected function appErrorSchema(): void
+    {
+        $this->schemaBuilder()->create((new AppError)->getTable(), function (Blueprint $table) {
+
+            $this->commonTableConfigurationForMetrics($table);
+
+            // request data
+            $table->string('class');
+            $table->string('file');
+            $table->string('code');
+            $table->unsignedInteger('line');
+            $table->string('message');
+            $table->jsonb('context');
+            $table->jsonb('trace');
+            $table->jsonb('linePreview');
+
+            // timestamps
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * @param $table
+     * @return void
+     */
+    protected function commonTableConfigurationForMetrics(&$table): void
+    {
+        $table->bigIncrements('id');
+        $table->uuid();
+        $table->string('family_hash');
+
+        // relation - app_entries
+        $table->bigInteger('entry_id');
+        $table->foreign('entry_id')->references('id')->on((new AppEntry)->getTable());
+        $table->uuid('entry_uuid');
+        $table->uuid('batch_id');
+
+        // relation - sources
+        $table->unsignedTinyInteger('source_id');
+        $table->foreign('source_id')->references('id')->on((new Source)->getTable());
+
+        // relation - environments
+        $table->unsignedTinyInteger('env_id');
+        $table->foreign('env_id')->references('id')->on((new Environment)->getTable());
     }
 
     /**
