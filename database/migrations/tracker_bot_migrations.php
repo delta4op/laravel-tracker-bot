@@ -9,6 +9,7 @@ use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
 use Delta4op\Laravel\TrackerBot\Enums\RequestProtocol;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -29,12 +30,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $schema = Schema::connection($this->getConnection());
-
-        $schema->dropIfExists((new AppEntry)->getTable());
-        $schema->dropIfExists((new AppRequest)->getTable());
-        $schema->dropIfExists((new Environment)->getTable());
-        $schema->dropIfExists((new Source)->getTable());
+        $this->schemaBuilder()->dropIfExists((new AppEntry)->getTable());
+        $this->schemaBuilder()->dropIfExists((new AppRequest)->getTable());
+        $this->schemaBuilder()->dropIfExists((new Environment)->getTable());
+        $this->schemaBuilder()->dropIfExists((new Source)->getTable());
     }
 
     /**
@@ -42,7 +41,7 @@ return new class extends Migration
      */
     protected function sourceSchema(): void
     {
-        Schema::create((new Source)->getTable(), function (Blueprint $table) {
+        $this->schemaBuilder()->create((new Source)->getTable(), function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->string('symbol');
 
@@ -50,9 +49,12 @@ return new class extends Migration
         });
     }
 
+    /**
+     * @return void
+     */
     protected function environmentSchema(): void
     {
-        Schema::create((new Environment)->getTable(), function (Blueprint $table) {
+        $this->schemaBuilder()->create((new Environment)->getTable(), function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->string('symbol');
 
@@ -60,9 +62,12 @@ return new class extends Migration
         });
     }
 
+    /**
+     * @return void
+     */
     protected function appEntriesSchema(): void
     {
-        Schema::create((new AppEntry)->getTable(), function (Blueprint $table) {
+        $this->schemaBuilder()->create((new AppEntry)->getTable(), function (Blueprint $table) {
 
             // ids
             $table->bigIncrements('id');
@@ -89,9 +94,12 @@ return new class extends Migration
         });
     }
 
+    /**
+     * @return void
+     */
     protected function appRequestsSchema(): void
     {
-        Schema::create((new AppRequest())->getTable(), function (Blueprint $table) {
+        $this->schemaBuilder()->create((new AppRequest())->getTable(), function (Blueprint $table) {
 
             // ids
             $table->bigIncrements('id');
@@ -144,5 +152,15 @@ return new class extends Migration
             // timestamps
             $table->timestamps();
         });
+    }
+
+    /**
+     * @return Builder
+     */
+    protected function schemaBuilder(): Builder
+    {
+        return Schema::connection(
+            config('tracker-bot.storage.database.connection')
+        );
     }
 };

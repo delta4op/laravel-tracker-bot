@@ -89,7 +89,7 @@ class TrackerBotProvider extends PackageServiceProvider
     {
         $package->name('tracker-bot')
             ->hasConfigFile('tracker-bot')
-            ->hasMigration();
+            ->hasMigration('tracker_bot_migrations');
     }
 
     /**

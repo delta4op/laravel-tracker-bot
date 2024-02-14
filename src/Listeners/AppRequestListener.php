@@ -27,13 +27,10 @@ class AppRequestListener extends Listener
             return;
         }
 
-        $this->recordEntry(
-            AppEntryType::APP_REQUEST,
-            $this->prepareEventObject($event)
-        );
+        $this->recordEntry($this->prepareAppRequest($event));
     }
 
-    protected function prepareEventObject(RequestHandled $event): AppRequest
+    protected function prepareAppRequest(RequestHandled $event): AppRequest
     {
         $startTime = defined('LARAVEL_START') ? LARAVEL_START : $event->request->server('REQUEST_TIME_FLOAT');
 

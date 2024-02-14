@@ -11,7 +11,7 @@ trait StringEnumHelpers
      */
     public static function values(): array
     {
-        return collect(self::cases())->map(function(HttpMethod $method){
+        return collect(self::cases())->map(function(self $method){
             return $method->value;
         })->toArray();
     }

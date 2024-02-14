@@ -28,8 +28,9 @@ return [
      * storage configuration
      */
     'storage' => [
-        'driver' => 'database',
-        'connection' => env('TRACKER_BOT_DB_CONNECTION', 'tracker-bot'),
+        'database' => [
+            'connection' => env('TRACKER_BOT_DB_CONNECTION', 'tracker-bot'),
+        ],
     ],
 
     // todo - morph maps to be added

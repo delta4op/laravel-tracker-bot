@@ -46,6 +46,6 @@ class BaseModel extends Model
 
     public function getConnectionName(): mixed
     {
-        return config('tracker-bot.storage.connection', 'tracker-bot');
+        return config('tracker-bot.storage.database.connection', 'tracker');
     }
 }
