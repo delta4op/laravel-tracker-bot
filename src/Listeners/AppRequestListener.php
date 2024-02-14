@@ -56,11 +56,6 @@ class AppRequestListener extends Listener
         $appRequest->controller_action = $event->request->route()?->getActionName();
         $appRequest->controller_class = $event->request->route()?->getControllerClass();
 
-        $appRequest->source()->associate(TrackerBot::getSource());
-        $appRequest->env()->associate(TrackerBot::getEnvironment());
-
-        $appRequest->family_hash = 'unset';
-
         return $appRequest;
     }
 

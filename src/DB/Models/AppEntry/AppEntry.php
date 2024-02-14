@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
  * @property ?int $env_id
  * @property ?string $model_key
  * @property ?string $model_id
- * @property ?string $familyHash
+ * @property ?string $family_hash
  *
  * @method AppEntryEB query()
  */
