@@ -8,11 +8,9 @@ use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
 use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
-use Delta4op\Laravel\TrackerBot\Enums\RequestProtocol;
-use Illuminate\Support\Str;
 
 /**
- * @property ?RequestProtocol $protocol
+ * @property ?string $protocol
  * @property ?HttpMethod $method
  * @property ?string $host
  * @property ?string $path
@@ -46,7 +44,6 @@ class AppRequest extends MetricsModel
     protected $table = 'app_requests';
 
     protected $casts = [
-        'protocol' => RequestProtocol::class,
         'ips' => 'array',
         'middleware' => 'array',
         'headers' => 'array',

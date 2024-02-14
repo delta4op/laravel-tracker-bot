@@ -6,7 +6,6 @@ use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppError;
 use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
-use Delta4op\Laravel\TrackerBot\Enums\RequestProtocol;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
@@ -104,7 +103,7 @@ return new class extends Migration
             $this->commonTableConfigurationForMetrics($table);
 
             // request data
-            $table->enum('protocol', RequestProtocol::values())->nullable();
+            $table->string('protocol')->nullable();
             $table->enum('method', HttpMethod::values());
             $table->string('host');
             $table->string('path');
