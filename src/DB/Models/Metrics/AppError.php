@@ -33,6 +33,11 @@ class AppError extends MetricsModel
      */
     public function calculateFamilyHash(): string
     {
-        return 'unset';
+        return md5(
+            ($this->file ?? '') .
+            ($this->line ?? '') .
+            ($this->message ?? '') .
+            ($this->code ?? '')
+        );
     }
 }
