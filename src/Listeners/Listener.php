@@ -24,6 +24,10 @@ abstract class Listener
      */
     protected function recordEntry(MetricsModel $model): AppEntry
     {
+        if(!$model->family_hash) {
+            $model->calculateFamilyHash();
+        }
+
         $source = TrackerBot::getSource();
         $environment = TrackerBot::getEnvironment();
 

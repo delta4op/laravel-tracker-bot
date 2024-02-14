@@ -4,10 +4,12 @@ namespace Delta4op\Laravel\TrackerBot\DB\Concerns;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
 use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Str;
 
 /**
  * @property ?string $id
@@ -27,6 +29,22 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 abstract class MetricsModel extends Model
 {
     use HasTimestamps;
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (AppRequest $appRequest) {
+            if(!isset($appRequest->uuid)) {
+                $appRequest->uuid = Str::orderedUuid()->toString();
+            }
+
+            if(!isset($appRequest->family_hash)) {
+                $appRequest->setFamilyHash();
+            }
+        });
+    }
 
     public function appEntry(): MorphOne
     {

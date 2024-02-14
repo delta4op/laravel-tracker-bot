@@ -56,17 +56,6 @@ class AppRequest extends MetricsModel
     ];
 
     /**
-     * The "booted" method of the model.
-     */
-    protected static function booted(): void
-    {
-        static::creating(function (AppRequest $appRequest) {
-            $appRequest->uuid = Str::orderedUuid()->toString();
-            $appRequest->setFamilyHash();
-        });
-    }
-
-    /**
      * @return string
      */
     public function calculateFamilyHash(): string
