@@ -2,10 +2,11 @@
 
 use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
 use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest\AppRequest;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
+use Delta4op\Laravel\TrackerBot\Enums\HttpContentType;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
 use Delta4op\Laravel\TrackerBot\Enums\RequestProtocol;
-use Delta4op\Laravel\TrackerBot\Enums\HttpContentType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,80 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create((new Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry)->getTable(), function (Blueprint $table) {
+        $this->sourceSchema();
+        $this->environmentSchema();
+        $this->appEntriesSchema();
+        $this->appRequestsSchema();
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        $schema = Schema::connection($this->getConnection());
+
+        $schema->dropIfExists((new AppEntry)->getTable());
+        $schema->dropIfExists((new AppRequest)->getTable());
+        $schema->dropIfExists((new Environment)->getTable());
+        $schema->dropIfExists((new Source)->getTable());
+    }
+
+    /**
+     * @return void
+     */
+    protected function sourceSchema(): void
+    {
+        Schema::create((new Source)->getTable(), function (Blueprint $table) {
+            $table->tinyIncrements('id');
+            $table->string('symbol');
+
+            $table->timestamps();
+        });
+    }
+
+    protected function environmentSchema(): void
+    {
+        Schema::create((new Environment)->getTable(), function (Blueprint $table) {
+            $table->tinyIncrements('id');
+            $table->string('symbol');
+
+            $table->timestamps();
+        });
+    }
+
+    protected function appEntriesSchema(): void
+    {
+        Schema::create((new AppEntry)->getTable(), function (Blueprint $table) {
+
+            // ids
+            $table->bigIncrements('id');
+            $table->uuid();
+            $table->uuid('batchId');
+
+            // relation - sources
+            $table->unsignedTinyInteger('source_id');
+            $table->foreign('source_id')->references('id')->on((new Source)->getTable());
+
+            // relation - environments
+            $table->unsignedTinyInteger('env_id');
+            $table->foreign('env_id')->references('id')->on((new Environment)->getTable());
+
+            // hash
+            $table->string('family_hash', 150);
+
+            $table->string('model_key', 150)->nullable();
+            $table->unsignedBigInteger('model_id')->nullable();
+
+            $table->
+
+            $table->timestamps();
+        });
+    }
+
+    protected function appRequestsSchema(): void
+    {
+        Schema::create((new AppRequest())->getTable(), function (Blueprint $table) {
 
             // ids
             $table->bigIncrements('id');

@@ -87,7 +87,9 @@ class TrackerBotProvider extends PackageServiceProvider
      */
     public function configurePackage(Package $package): void
     {
-        $package->name('tracker-bot')->hasConfigFile('tracker-bot');
+        $package->name('tracker-bot')
+            ->hasConfigFile('tracker-bot')
+            ->hasMigration();
     }
 
     /**
