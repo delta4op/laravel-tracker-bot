@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class AppRequestListener extends Listener
 {
@@ -55,8 +56,10 @@ class AppRequestListener extends Listener
         $appRequest->duration = $startTime ? floor((microtime(true) - $startTime) * 1000) : null;
         $appRequest->memory = round(memory_get_peak_usage(true) / 1024 / 1024, 1);
 
-        $appRequest->controller_action = $event->request->route()?->getActionName();
-        $appRequest->controller_class = $event->request->route()?->getControllerClass();
+        try {
+            $appRequest->controller_action = $event->request->route()?->getActionName();
+            $appRequest->controller_class = $event->request->route()?->getControllerClass();
+        }catch(Throwable) {}
 
         return $appRequest;
     }
