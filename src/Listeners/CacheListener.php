@@ -20,10 +20,10 @@ class CacheListener extends Listener
             return;
         }
 
-        $this->recordEntry(
-            AppEntryType::CACHE,
-            $this->prepareEventObject($event)
-        );
+//        $this->recordEntry(
+//            AppEntryType::CACHE,
+//            $this->prepareEventObject($event)
+//        );
     }
 
     protected function prepareEventObject(CacheHit|CacheMissed|KeyWritten|KeyForgotten $event): CacheObject

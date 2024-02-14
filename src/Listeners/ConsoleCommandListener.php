@@ -15,10 +15,10 @@ class ConsoleCommandListener extends Listener
             return;
         }
 
-        $this->recordEntry(
-            AppEntryType::CONSOLE_COMMAND,
-            $this->prepareEventObject($event)
-        );
+//        $this->recordEntry(
+//            AppEntryType::CONSOLE_COMMAND,
+//            $this->prepareEventObject($event)
+//        );
     }
 
     /**

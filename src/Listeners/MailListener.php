@@ -20,10 +20,10 @@ class MailListener extends Listener
             return;
         }
 
-        $this->recordEntry(
-            AppEntryType::MAIL,
-            $this->prepareEventObject($event)
-        );
+//        $this->recordEntry(
+//            AppEntryType::MAIL,
+//            $this->prepareEventObject($event)
+//        );
     }
 
     /**

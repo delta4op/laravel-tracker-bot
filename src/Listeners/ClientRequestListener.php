@@ -21,10 +21,10 @@ class ClientRequestListener extends Listener
             return;
         }
 
-        $this->recordEntry(
-            AppEntryType::CLIENT_REQUEST,
-            $this->prepareEventObject($event)
-        );
+//        $this->recordEntry(
+//            AppEntryType::CLIENT_REQUEST,
+//            $this->prepareEventObject($event)
+//        );
     }
 
     protected function prepareEventObject(ResponseReceived|ConnectionFailed $event): ClientRequestObject

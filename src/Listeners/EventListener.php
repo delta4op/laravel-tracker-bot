@@ -31,10 +31,10 @@ class EventListener extends Listener
         }
 
 
-        $this->recordEntry(
-            AppEntryType::EVENT,
-            $this->prepareEventObject($eventName, $payload)
-        );
+//        $this->recordEntry(
+//            AppEntryType::EVENT,
+//            $this->prepareEventObject($eventName, $payload)
+//        );
     }
 
     /**

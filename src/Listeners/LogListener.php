@@ -33,10 +33,10 @@ class LogListener extends Listener
             return;
         }
 
-        $this->recordEntry(
-            AppEntryType::APP_LOG,
-            $this->prepareEventObject($event)
-        );
+//        $this->recordEntry(
+//            AppEntryType::APP_LOG,
+//            $this->prepareEventObject($event)
+//        );
     }
 
     /**

@@ -15,10 +15,10 @@ class DbQueryListener extends Listener
             return;
         }
 
-        $this->recordEntry(
-            AppEntryType::DB_QUERY,
-            $this->prepareEventObject($event)
-        );
+//        $this->recordEntry(
+//            AppEntryType::DB_QUERY,
+//            $this->prepareEventObject($event)
+//        );
     }
 
     /**

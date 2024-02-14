@@ -19,12 +19,12 @@ class ScheduleListener extends Listener
             return;
         }
 
-        if ($object = $this->prepareEventObject($event)) {
-            $this->recordEntry(
-                AppEntryType::COMMAND_SCHEDULE,
-                $object
-            );
-        }
+//        if ($object = $this->prepareEventObject($event)) {
+//            $this->recordEntry(
+//                AppEntryType::COMMAND_SCHEDULE,
+//                $object
+//            );
+//        }
     }
 
     /**

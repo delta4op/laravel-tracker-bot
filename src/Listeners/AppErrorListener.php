@@ -18,12 +18,12 @@ class AppErrorListener extends Listener
             return;
         }
 
-        if ($object = $this->prepareEventObject($event)) {
-            $this->recordEntry(
-                AppEntryType::APP_ERROR,
-                $object
-            );
-        }
+//        if ($object = $this->prepareEventObject($event)) {
+//            $this->recordEntry(
+//                AppEntryType::APP_ERROR,
+//                $object
+//            );
+//        }
     }
 
     protected function prepareEventObject(MessageLogged $event): ?AppErrorObject

@@ -15,10 +15,10 @@ class RedisListener extends Listener
             return;
         }
 
-        $this->recordEntry(
-            AppEntryType::REDIS,
-            $this->prepareEventObject($event)
-        );
+//        $this->recordEntry(
+//            AppEntryType::REDIS,
+//            $this->prepareEventObject($event)
+//        );
     }
 
     protected function prepareEventObject(CommandExecuted $event): RedisObject
