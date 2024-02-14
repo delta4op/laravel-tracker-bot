@@ -1,12 +1,13 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Listeners;
+namespace Delta4op\Laravel\TrackerBot\Watchers;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
-use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
+use Delta4op\Laravel\TrackerBot\Tracker;
 use Delta4op\Laravel\TrackerBot\Support\FormatModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
@@ -17,17 +18,35 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
-class AppRequestListener extends Listener
+class AppRequestWatcher extends Watcher
 {
-    public function handle(RequestHandled $event): void
+    /**
+     * @param Application $app
+     * @return void
+     */
+    public function register(Application $app): void
     {
-        if(!TrackerBot::isEnabled() || $this->options['enabled'] !== true) {
+        $app['events']->listen(RequestHandled::class, [$this, 'recordAppRequest']);
+    }
+
+    public function recordAppRequest(RequestHandled $event): void
+    {
+        if (
+            !Tracker::isRecording() ||
+            $this->shouldIgnoreHttpMethod($event) ||
+            $this->shouldIgnoreStatusCode($event)) {
             return;
         }
 
-        $this->recordEntry($this->prepareAppRequest($event));
+        Tracker::recordEntry(
+            $this->prepareAppRequest($event)
+        );
     }
 
+    /**
+     * @param RequestHandled $event
+     * @return AppRequest
+     */
     protected function prepareAppRequest(RequestHandled $event): AppRequest
     {
         $startTime = defined('LARAVEL_START') ? LARAVEL_START : $event->request->server('REQUEST_TIME_FLOAT');
@@ -45,7 +64,7 @@ class AppRequestListener extends Listener
         $appRequest->ips = $event->request->ips();
         $appRequest->middleware = array_values($event->request->route()?->gatherMiddleware() ?? []);
         $appRequest->headers = $this->headers($event->request->headers->all());
-        $appRequest->content = (string) $event->request->getContent();
+        $appRequest->content = (string)$event->request->getContent();
         $appRequest->session = $this->payload($this->sessionVariables($event->request));
         $appRequest->cookies = [];
 
@@ -59,7 +78,8 @@ class AppRequestListener extends Listener
         try {
             $appRequest->controller_action = $event->request->route()?->getActionName();
             $appRequest->controller_class = $event->request->route()?->getControllerClass();
-        }catch(Throwable) {}
+        } catch (Throwable) {
+        }
 
         return $appRequest;
     }
@@ -70,7 +90,7 @@ class AppRequestListener extends Listener
     protected function headers(array $headers): array
     {
         $headers = collect($headers)
-            ->map(fn ($header) => implode(', ', $header))
+            ->map(fn($header) => implode(', ', $header))
             ->all();
 
         return $this->hideParameters($headers, []);
@@ -110,7 +130,7 @@ class AppRequestListener extends Listener
         array_walk_recursive($files, function (&$file) {
             $file = [
                 'name' => $file->getClientOriginalName(),
-                'size' => $file->isFile() ? ($file->getSize() / 1000).'KB' : '0',
+                'size' => $file->isFile() ? ($file->getSize() / 1000) . 'KB' : '0',
             ];
         });
 
@@ -146,7 +166,7 @@ class AppRequestListener extends Listener
         }
 
         if ($response instanceof RedirectResponse) {
-            return 'Redirected to '.$response->getTargetUrl();
+            return 'Redirected to ' . $response->getTargetUrl();
         }
 
         if ($response instanceof IlluminateResponse && $response->getOriginalContent() instanceof View) {
@@ -190,5 +210,35 @@ class AppRequestListener extends Listener
                 return json_decode(json_encode($value), true);
             }
         })->toArray();
+    }
+
+    /**
+     * Determine if the request should be ignored based on its method.
+     *
+     * @param mixed $event
+     * @return bool
+     */
+    protected function shouldIgnoreHttpMethod($event): bool
+    {
+        return in_array(
+            strtolower($event->request->method()),
+            collect($this->options['ignore_http_methods'] ?? [])->map(function ($method) {
+                return strtolower($method);
+            })->all()
+        );
+    }
+
+    /**
+     * Determine if the request should be ignored based on its status code.
+     *
+     * @param mixed $event
+     * @return bool
+     */
+    protected function shouldIgnoreStatusCode($event): bool
+    {
+        return in_array(
+            $event->response->getStatusCode(),
+            $this->options['ignore_status_codes'] ?? []
+        );
     }
 }

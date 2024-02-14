@@ -1,10 +1,10 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Listeners;
+namespace Delta4op\Laravel\TrackerBot\Watchers;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\objects\ClientRequestObject;
-use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
-use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\ClientRequest;
+use Delta4op\Laravel\TrackerBot\Tracker;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Client\Events\ConnectionFailed;
 use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Client\Request;
@@ -13,33 +13,43 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\File;
 
-class ClientRequestListener extends Listener
+class ClientRequestWatcher extends Watcher
 {
-    public function handle(ResponseReceived|ConnectionFailed $event): void
+    /**
+     * Register the watcher.
+     *
+     * @param Application $app
+     * @return void
+     */
+    public function register(Application $app): void
     {
-        if(!TrackerBot::isEnabled()) {
+        $app['events']->listen(ConnectionFailed::class, [$this, 'recordRequest']);
+        $app['events']->listen(ResponseReceived::class, [$this, 'recordRequest']);
+    }
+
+    public function recordRequest(ResponseReceived|ConnectionFailed $event): void
+    {
+        if (!Tracker::isRecording()) {
             return;
         }
 
-//        $this->recordEntry(
-//            AppEntryType::CLIENT_REQUEST,
-//            $this->prepareEventObject($event)
-//        );
+        Tracker::recordEntry(
+            $this->prepareClientRequest($event)
+        );
     }
 
-    protected function prepareEventObject(ResponseReceived|ConnectionFailed $event): ClientRequestObject
+    protected function prepareClientRequest(ResponseReceived|ConnectionFailed $event): ClientRequest
     {
-        $object = new ClientRequestObject;
-        $object->uri = $event->request->url();
+        $object = new ClientRequest;
+        $object->url = $event->request->url();
         $object->method = $event->request->method();
         $object->headers = $this->headers($event->request->headers());
-        $object->input = $this->payload($this->input($event->request));
         $object->content = $event->request->body();
 
         if ($event instanceof ResponseReceived) {
-            $object->responseStatus = $event->response->status();
-            $object->responseHeaders = $this->headers($event->response->headers());
-            $object->response = $this->response($event->response);
+            $object->response_status = $event->response->status();
+            $object->response_headers = $this->headers($event->response->headers());
+            $object->response_content = $this->response($event->response);
             $object->duration = $this->duration($event->response);
         }
 
@@ -59,7 +69,7 @@ class ClientRequestListener extends Listener
     /**
      * Format the given response object.
      */
-    protected function response(\Illuminate\Http\Client\Response $response): array|string
+    protected function response(Response $response): string
     {
         $content = $response->body();
 
@@ -83,7 +93,7 @@ class ClientRequestListener extends Listener
         }
 
         if ($response->redirect()) {
-            return 'Redirected to '.$response->header('Location');
+            return 'Redirected to ' . $response->header('Location');
         }
 
         if (empty($content)) {
@@ -96,7 +106,7 @@ class ClientRequestListener extends Listener
     /**
      * Format the given headers.
      *
-     * @param  array  $headers
+     * @param array $headers
      */
     protected function headers($headers): array
     {
@@ -105,7 +115,7 @@ class ClientRequestListener extends Listener
         })->toArray();
 
         $headerValues = collect($headers)
-            ->map(fn ($header) => implode(', ', $header))
+            ->map(fn($header) => implode(', ', $header))
             ->all();
 
         $headers = array_combine($headerNames, $headerValues);
@@ -118,7 +128,7 @@ class ClientRequestListener extends Listener
     /**
      * Format the given payload.
      *
-     * @param  array  $payload
+     * @param array $payload
      */
     protected function payload($payload): array
     {
@@ -130,8 +140,8 @@ class ClientRequestListener extends Listener
     /**
      * Hide the given parameters.
      *
-     * @param  array  $data
-     * @param  array  $hidden
+     * @param array $data
+     * @param array $hidden
      */
     protected function hideParameters(array $data, array $hidden = []): mixed
     {
@@ -149,7 +159,7 @@ class ClientRequestListener extends Listener
      */
     protected function input(Request $request): array
     {
-        if (! $request->isMultipart()) {
+        if (!$request->isMultipart()) {
             return $request->data();
         }
 
@@ -157,7 +167,7 @@ class ClientRequestListener extends Listener
             if ($data['contents'] instanceof File) {
                 $value = [
                     'name' => $data['filename'] ?? $data['contents']->getClientOriginalName(),
-                    'size' => ($data['contents']->getSize() / 1000).'KB',
+                    'size' => ($data['contents']->getSize() / 1000) . 'KB',
                     'headers' => $data['headers'] ?? [],
                 ];
             } elseif (is_resource($data['contents'])) {
@@ -165,13 +175,13 @@ class ClientRequestListener extends Listener
 
                 $value = [
                     'name' => $data['filename'] ?? null,
-                    'size' => $filesize ? ($filesize / 1000).'KB' : null,
+                    'size' => $filesize ? ($filesize / 1000) . 'KB' : null,
                     'headers' => $data['headers'] ?? [],
                 ];
             } elseif (json_encode($data['contents']) === false) {
                 $value = [
                     'name' => $data['filename'] ?? null,
-                    'size' => (strlen($data['contents']) / 1000).'KB',
+                    'size' => (strlen($data['contents']) / 1000) . 'KB',
                     'headers' => $data['headers'] ?? [],
                 ];
             } else {

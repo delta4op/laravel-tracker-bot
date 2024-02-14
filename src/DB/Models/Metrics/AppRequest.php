@@ -34,10 +34,6 @@ use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
  *
  * @property ?string $controller_class
  * @property ?string $controller_action
- *
- * @property ?AppEntry $appEntry
- * @property ?Source $source
- * @property ?Environment $env
  */
 class AppRequest extends MetricsModel
 {

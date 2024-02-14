@@ -35,13 +35,13 @@ abstract class MetricsModel extends BaseModel
      */
     protected static function booted(): void
     {
-        static::creating(function (AppRequest $appRequest) {
-            if(!isset($appRequest->uuid)) {
-                $appRequest->uuid = Str::orderedUuid()->toString();
+        static::creating(function (MetricsModel $metricsModel) {
+            if(!isset($metricsModel->uuid)) {
+                $metricsModel->uuid = Str::orderedUuid()->toString();
             }
 
-            if(!isset($appRequest->family_hash)) {
-                $appRequest->setFamilyHash();
+            if(!isset($metricsModel->family_hash)) {
+                $metricsModel->setFamilyHash();
             }
         });
     }

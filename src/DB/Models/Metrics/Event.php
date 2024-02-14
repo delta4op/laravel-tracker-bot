@@ -5,21 +5,16 @@ namespace Delta4op\Laravel\TrackerBot\DB\Models\Metrics;
 use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
 
 /**
- * @property ?string $class
- * @property ?string $file
- * @property ?boolean $is_internal_file
- * @property ?string $code
- * @property ?int $line
- * @property ?string $message
- * @property ?array $context
- * @property ?array $trace
- * @property ?array $linePreview
+ * @property ?string $name
+ * @property ?array $payload
+ * @property ?array $listeners
+ * @property ?mixed $broadcast
  */
-class AppEvent extends MetricsModel
+class Event extends MetricsModel
 {
     use HasTimestamps;
 
-    protected $table = 'app_errors';
+    protected $table = 'events';
 
     protected $casts = [
         'context' => 'array',

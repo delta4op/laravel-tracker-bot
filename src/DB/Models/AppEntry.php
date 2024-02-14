@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;
 
 /**
- * @property ?string $_id
+ * @property ?string $id
  * @property ?string $uuid
  * @property ?string $batchId
  * @property ?int $source_id

@@ -1,16 +1,16 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Listeners;
+namespace Delta4op\Laravel\TrackerBot\Watchers;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\objects\LogObject;
-use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
-use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\Log;
+use Delta4op\Laravel\TrackerBot\Tracker;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
 use Psr\Log\LogLevel;
 use Throwable;
 
-class LogListener extends Listener
+class LogWatcher extends Watcher
 {
     protected const PRIORITIES = [
         LogLevel::DEBUG => 100,
@@ -24,28 +24,38 @@ class LogListener extends Listener
     ];
 
     /**
-     * @param MessageLogged $event
+     * Register the watcher.
+     *
+     * @param  Application  $app
      * @return void
      */
-    public function handle(MessageLogged $event): void
+    public function register(Application $app): void
     {
-        if (!TrackerBot::isEnabled() || $this->shouldIgnore($event)) {
-            return;
-        }
-
-//        $this->recordEntry(
-//            AppEntryType::APP_LOG,
-//            $this->prepareEventObject($event)
-//        );
+        $app['events']->listen(MessageLogged::class, [$this, 'recordLog']);
     }
 
     /**
      * @param MessageLogged $event
-     * @return LogObject
+     * @return void
      */
-    protected function prepareEventObject(MessageLogged $event): LogObject
+    public function recordLog(MessageLogged $event): void
     {
-        $object = new LogObject;
+        if (!Tracker::isRecording() || $this->shouldIgnore($event)) {
+            return;
+        }
+
+        Tracker::recordEntry(
+            $this->prepareAppLog($event)
+        );
+    }
+
+    /**
+     * @param MessageLogged $event
+     * @return Log
+     */
+    protected function prepareAppLog(MessageLogged $event): Log
+    {
+        $object = new Log;
 
         $object->level = $event->level;
         $object->message = $event->message;
@@ -63,6 +73,10 @@ class LogListener extends Listener
     private function shouldIgnore(MessageLogged $event): bool
     {
         if (isset($event->context['exception']) && $event->context['exception'] instanceof Throwable) {
+            return true;
+        }
+
+        if(!$this->isWatcherEnabled()) {
             return true;
         }
 

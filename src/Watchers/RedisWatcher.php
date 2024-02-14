@@ -1,32 +1,38 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Listeners;
+namespace Delta4op\Laravel\TrackerBot\Watchers;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\objects\RedisObject;
-use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
-use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\RedisEvent;
+use Delta4op\Laravel\TrackerBot\Tracker;
 use Illuminate\Redis\Events\CommandExecuted;
 
-class RedisListener extends Listener
+class RedisWatcher extends Watcher
 {
+    /**
+     * @param CommandExecuted $event
+     * @return void
+     */
     public function handle(CommandExecuted $event): void
     {
-        if (!TrackerBot::isEnabled() || $this->shouldIgnore($event)) {
+        if ($this->shouldIgnore($event)) {
             return;
         }
 
-//        $this->recordEntry(
-//            AppEntryType::REDIS,
-//            $this->prepareEventObject($event)
-//        );
+        Tracker::recordEntry(
+            $this->prepareRedisEvent($event)
+        );
     }
 
-    protected function prepareEventObject(CommandExecuted $event): RedisObject
+    /**
+     * @param CommandExecuted $event
+     * @return RedisEvent
+     */
+    protected function prepareRedisEvent(CommandExecuted $event): RedisEvent
     {
-        $object = new RedisObject;
+        $object = new RedisEvent;
         $object->connection = $event->connectionName;
         $object->command = $this->formatCommand($event->command, $event->parameters);
-        $object->time = number_format($event->time, 2, '.', '');
+        $object->time = round($event->time, 2);
 
         return $object;
     }
@@ -50,7 +56,7 @@ class RedisListener extends Listener
             return $parameter;
         })->implode(' ');
 
-        return "{$command} {$parameters}";
+        return "$command $parameters";
     }
 
     /**
@@ -58,8 +64,11 @@ class RedisListener extends Listener
      */
     private function shouldIgnore(mixed $event): bool
     {
-        return in_array($event->command, [
-            'pipeline', 'transaction',
-        ]);
+        return
+            !Tracker::isRecording() ||
+            !$this->isWatcherEnabled() ||
+            in_array($event->command, [
+                'pipeline', 'transaction',
+            ]);
     }
 }

@@ -1,25 +1,39 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Listeners;
+namespace Delta4op\Laravel\TrackerBot\Watchers;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\DbQuery;
-use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
+use Delta4op\Laravel\TrackerBot\Helpers\FileHelpers;
+use Delta4op\Laravel\TrackerBot\Tracker;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Events\QueryExecuted;
 use PDOException;
+use Throwable;
 
-class DbQueryListener extends Listener
+class DbQueryWatcher extends Watcher
 {
+    /**
+     * Register the watcher.
+     *
+     * @param  Application  $app
+     * @return void
+     */
+    public function register(Application $app): void
+    {
+        $app['events']->listen(QueryExecuted::class, [$this, 'recordDbQuery']);
+    }
+
     /**
      * @param QueryExecuted $event
      * @return void
      */
-    public function handle(QueryExecuted $event): void
+    public function recordDbQuery(QueryExecuted $event): void
     {
-        if (!TrackerBot::isEnabled() || $this->options['enabled'] !== true || $this->isTrackerBotQuery($event)) {
+        if (!Tracker::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
-        $this->recordEntry(
+        Tracker::recordEntry(
             $this->prepareQueryModel($event)
         );
     }
@@ -30,7 +44,7 @@ class DbQueryListener extends Listener
      */
     protected function isTrackerBotQuery(QueryExecuted $event): bool
     {
-        return $event->connectionName === config('tracker-bot.storage.connection');
+        return $event->connectionName === Tracker::dbConnection();
     }
 
     protected function prepareQueryModel(QueryExecuted $event): DbQuery
@@ -48,7 +62,7 @@ class DbQueryListener extends Listener
             $dbQuery->line = $caller['line'] ?? null;
 
             if (is_string($dbQuery->file)) {
-                $dbQuery->is_internal_file = $this->isInternalFile($dbQuery->file);
+                $dbQuery->is_internal_file = FileHelpers::isInternalFile($dbQuery->file);
             }
         }
 
@@ -99,9 +113,9 @@ class DbQueryListener extends Listener
      * @param QueryExecuted $event
      * @param string $binding
      * @return string
-     * @throws \Throwable
+     * @throws Throwable
      */
-    protected function quoteStringBinding(QueryExecuted $event, $binding): string
+    protected function quoteStringBinding(QueryExecuted $event, string $binding): string
     {
         try {
             return $event->connection->getPdo()->quote($binding);
@@ -119,5 +133,15 @@ class DbQueryListener extends Listener
         ]);
 
         return "'" . $binding . "'";
+    }
+
+    /**
+     * @param QueryExecuted $event
+     * @return bool
+     */
+    protected function shouldIgnore(QueryExecuted $event): bool
+    {
+        return !$this->isWatcherEnabled() ||
+            $this->isTrackerBotQuery($event);
     }
 }

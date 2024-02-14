@@ -6,14 +6,15 @@ enum AppEntryType: string
 {
     case APP_REQUEST = 'APP_REQUEST';
     case CLIENT_REQUEST = 'CLIENT_REQUEST';
-    case CACHE = 'CACHE';
+    case CACHE_EVENT = 'CACHE_EVENT';
     case DB_QUERY = 'DB_QUERY';
-    case APP_LOG = 'APP_LOG';
+    case LOG = 'APP_LOG';
     case CONSOLE_COMMAND = 'CONSOLE_COMMAND';
     case APP_ERROR = 'APP_ERROR';
-    case COMMAND_SCHEDULE = 'COMMAND_SCHEDULE';
-    case REDIS = 'REDIS';
+    case CONSOLE_SCHEDULE = 'COMMAND_SCHEDULE';
+    case EVENT = 'EVENT';
+    case REDIS_EVENT = 'REDIS_EVENT';
     case MAIL = 'MAIL';
     case MODEL = 'MODEL';
-    case EVENT = 'EVENT';
+    case APP_DUMP = 'APP_DUMP';
 }

@@ -1,22 +1,33 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Listeners;
+namespace Delta4op\Laravel\TrackerBot\Watchers;
 
 use Closure;
-use Delta4op\Laravel\TrackerBot\DB\Models\objects\EventObject;
-use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\Event;
+use Delta4op\Laravel\TrackerBot\Tracker;
 use Delta4op\Laravel\TrackerBot\Support\ExtractProperties;
 use Delta4op\Laravel\TrackerBot\Support\FormatsClosure;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Support\Str;
 use ReflectionException;
 use ReflectionFunction;
 
-class EventListener extends Listener
+class EventWatcher extends Watcher
 {
     use FormatsClosure;
+
+    /**
+     * Register the watcher.
+     *
+     * @param Application $app
+     * @return void
+     */
+    public function register(Application $app): void
+    {
+        $app['events']->listen('*', [$this, 'recordEvent']);
+    }
 
     /**
      * @param $eventName
@@ -24,30 +35,28 @@ class EventListener extends Listener
      * @return void
      * @throws ReflectionException
      */
-    public function handle($eventName, $payload): void
+    public function recordEvent($eventName, $payload): void
     {
-        if (!TrackerBot::isEnabled() || $this->shouldIgnore($eventName)) {
+        if (!Tracker::isRecording() || $this->shouldIgnore($eventName)) {
             return;
         }
 
-
-//        $this->recordEntry(
-//            AppEntryType::EVENT,
-//            $this->prepareEventObject($eventName, $payload)
-//        );
+        Tracker::recordEntry(
+            $this->prepareEventObject($eventName, $payload)
+        );
     }
 
     /**
      * @param $eventName
      * @param $payload
-     * @return EventObject|null
+     * @return Event
      * @throws ReflectionException
      */
-    protected function prepareEventObject($eventName, $payload): ?EventObject
+    protected function prepareEventObject($eventName, $payload): Event
     {
         $formattedPayload = $this->extractPayload($eventName, $payload);
 
-        $object = new EventObject;
+        $object = new Event;
 
         $object->name = $eventName;
         $object->payload = $formattedPayload;
@@ -80,7 +89,7 @@ class EventListener extends Listener
     }
 
     /**
-     * Format list of event listeners.
+     * Format list of event watchers.
      *
      * @param string $eventName
      * @return array

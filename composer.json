@@ -72,10 +72,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Delta4op\\Laravel\\TrackerBot\\TrackerBotProvider"
+                "TrackerProvider"
             ],
             "aliases": {
-                "Skeleton": "Delta4op\\Laravel\\TrackerBot\\TrackerBot"
+                "Skeleton": "Tracker"
             }
         }
     },

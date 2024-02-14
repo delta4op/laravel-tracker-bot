@@ -1,27 +1,40 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Listeners;
+namespace Delta4op\Laravel\TrackerBot\Watchers;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppError;
-use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
+use Delta4op\Laravel\TrackerBot\Helpers\FileHelpers;
 use Delta4op\Laravel\TrackerBot\Support\ExceptionContext;
+use Delta4op\Laravel\TrackerBot\Tracker;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
 use Throwable;
 
-class AppErrorListener extends Listener
+class AppErrorWatcher extends Watcher
 {
+    /**
+     * @param Application $app
+     * @return void
+     */
+    public function register(Application $app): void
+    {
+        $app['events']->listen(MessageLogged::class, [$this, 'recordAppError']);
+    }
+
     /**
      * @param MessageLogged $event
      * @return void
      */
-    public function handle(MessageLogged $event): void
+    public function recordAppError(MessageLogged $event): void
     {
-        if (!TrackerBot::isEnabled() || $this->options['enabled'] !== true || $this->shouldIgnore($event)) {
+        if (!Tracker::isRecording()|| $this->shouldIgnore($event)) {
             return;
         }
 
-        $this->recordEntry($this->prepareAppError($event));
+        Tracker::recordEntry(
+            $this->prepareAppError($event)
+        );
     }
 
     /**
@@ -41,7 +54,7 @@ class AppErrorListener extends Listener
 
         $appError->class = get_class($exception);
         $appError->file = $exception->getFile();
-        $appError->is_internal_file = $this->isInternalFile($exception->getFile());
+        $appError->is_internal_file = FileHelpers::isInternalFile($exception->getFile());
         $appError->line = $exception->getLine();
         $appError->code = (string) $exception->getCode();
         $appError->message = $exception->getMessage();

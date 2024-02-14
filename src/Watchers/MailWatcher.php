@@ -1,38 +1,50 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Listeners;
+namespace Delta4op\Laravel\TrackerBot\Watchers;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\objects\MailObject;
-use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
-use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\Mail;
+use Delta4op\Laravel\TrackerBot\Tracker;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Mail\Events\MessageSent;
 use Symfony\Component\Mime\Address;
 
-class MailListener extends Listener
+class MailWatcher extends Watcher
 {
     /**
-     * @param MessageSent $event
+     * Register the watcher.
+     *
+     * @param Application $app
      * @return void
      */
-    public function handle(MessageSent $event): void
+    public function register(Application $app): void
     {
-        if(!TrackerBot::isEnabled()) {
-            return;
-        }
-
-//        $this->recordEntry(
-//            AppEntryType::MAIL,
-//            $this->prepareEventObject($event)
-//        );
+        $app['events']->listen(MessageSent::class, [$this, 'recordMail']);
     }
 
     /**
      * @param MessageSent $event
-     * @return MailObject|null
+     * @return void
      */
-    protected function prepareEventObject(MessageSent $event): ?MailObject
+    public function recordMail(MessageSent $event): void
     {
-        $object = new MailObject;
+        if (!Tracker::isRecording()) {
+            return;
+        }
+
+        Tracker::recordEntry(
+            $this->prepareMail($event)
+        );
+    }
+
+    /**
+     * @param MessageSent $event
+     * @return Mail
+     */
+    protected function prepareMail(MessageSent $event): Mail
+    {
+        $object = new Mail;
+
+        $body = $event->message->getBody();
 
         $object->mailable = $this->getMailable($event);
         $object->queued = $this->getQueuedStatus($event);
@@ -42,7 +54,7 @@ class MailListener extends Listener
         $object->cc = $this->formatAddresses($event->message->getCc());
         $object->bcc = $this->formatAddresses($event->message->getBcc());
         $object->subject = $event->message->getSubject();
-        $object->html = (string) ($event->message->getHtmlBody() ?? $event->message->getTextBody());
+        $object->html = (string)($event->message->getHtmlBody() ?? $event->message->getTextBody());
         $object->raw = $event->message->toString();
 
         return $object;
@@ -60,11 +72,14 @@ class MailListener extends Listener
             return $event->data['__laravel_notification'];
         }
 
-        return $event->data['__trackerbot_mailable'] ?? '';
+        return $event->data['__telescope_mailable'] ?? '';
     }
 
     /**
      * Determine whether the mailable was queued.
+     *
+     * @param MessageSent $event
+     * @return bool
      */
     protected function getQueuedStatus(MessageSent $event): bool
     {
@@ -72,16 +87,19 @@ class MailListener extends Listener
             return $event->data['__laravel_notification_queued'];
         }
 
-        return $event->data['__trackerbot_queued'] ?? false;
+        return $event->data['__telescope_queued'] ?? false;
     }
 
     /**
      * Convert the given addresses into a readable format.
+     *
+     * @param  array|null  $addresses
+     * @return array
      */
-    protected function formatAddresses(?array $addresses): ?array
+    protected function formatAddresses(?array $addresses): array
     {
         if (is_null($addresses)) {
-            return null;
+            return [];
         }
 
         return collect($addresses)->flatMap(function ($address, $key) {
@@ -92,4 +110,5 @@ class MailListener extends Listener
             return [$key => $address];
         })->all();
     }
+
 }
