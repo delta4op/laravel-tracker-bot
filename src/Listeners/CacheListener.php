@@ -4,7 +4,7 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\CacheObject;
 use Delta4op\Laravel\TrackerBot\Enums\CacheEventType;
-use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Illuminate\Cache\Events\CacheHit;
 use Illuminate\Cache\Events\CacheMissed;
@@ -20,8 +20,8 @@ class CacheListener extends Listener
             return;
         }
 
-        $this->logEntry(
-            EntryType::CACHE,
+        $this->recordEntry(
+            AppEntryType::CACHE,
             $this->prepareEventObject($event)
         );
     }

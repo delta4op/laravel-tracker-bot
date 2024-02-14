@@ -2,9 +2,11 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\common\BrowserDetails;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest\AppRequest;
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\AppRequestObject;
-use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
+use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
+use Delta4op\Laravel\TrackerBot\Enums\RequestProtocol;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Delta4op\Laravel\TrackerBot\Support\FormatModel;
 use Illuminate\Database\Eloquent\Model;
@@ -25,42 +27,44 @@ class AppRequestListener extends Listener
             return;
         }
 
-        $this->logEntry(
-            EntryType::APP_REQUEST,
+        $this->recordEntry(
+            AppEntryType::APP_REQUEST,
             $this->prepareEventObject($event)
         );
     }
 
-    protected function prepareEventObject(RequestHandled $event): AppRequestObject
+    protected function prepareEventObject(RequestHandled $event): AppRequest
     {
         $startTime = defined('LARAVEL_START') ? LARAVEL_START : $event->request->server('REQUEST_TIME_FLOAT');
 
-        $object = new AppRequestObject();
-        $object->ip = $event->request->ip();
-        $object->ips = $event->request->ips();
-        $object->uri = $event->request->getUri();
-        $object->controllerAction = $event->request->route()?->getActionName();
-        $object->middleware = array_values($event->request->route()?->gatherMiddleware() ?? []);
-        $object->method = $event->request->getMethod();
-        $object->headers = $this->headers($event->request->headers->all());
-        $object->host = $event->request->host();
-        $object->getScheme = $event->request->getScheme();
-        $object->path = $event->request->path();
+        $appRequest = new AppRequest;
+        $appRequest->protocol = RequestProtocol::tryFrom(Str::upper($event->request->getProtocolVersion()));
+        $appRequest->method = HttpMethod::tryFrom(Str::upper($event->request->getMethod()));
+        $appRequest->host = $event->request->host();
+        $appRequest->path = $event->request->path();
+        $appRequest->url = $event->request->url();
+        $appRequest->ip = $event->request->ip();
+        $appRequest->ips = $event->request->ips();
+        $appRequest->middleware = array_values($event->request->route()?->gatherMiddleware() ?? []);
+        $appRequest->headers = $this->headers($event->request->headers->all());
+        $appRequest->content = (string) $event->request->getContent();
+        $appRequest->session = $this->payload($this->sessionVariables($event->request));
+        $appRequest->cookies = [];
 
-        $object->responseStatus = $event->response->getStatusCode();
-        $object->responseHeaders = $this->headers($event->response->headers->all());
-        $object->response = $event->response->getContent();
-        // $object->response = $this->response($event->response));
+        $appRequest->response_content = $event->response->getContent();
+        $appRequest->response_status = $event->response->getStatusCode();
+        $appRequest->response_headers = $this->headers($event->response->headers->all());
 
-        $object->content = (string) $event->request->getContent();
-        $object->input = $this->payload($this->input($event->request));
-        $object->session = $this->payload($this->sessionVariables($event->request));
-        $object->duration = $startTime ? floor((microtime(true) - $startTime) * 1000) : null;
-        $object->memory = round(memory_get_peak_usage(true) / 1024 / 1024, 1);
+        $appRequest->duration = $startTime ? floor((microtime(true) - $startTime) * 1000) : null;
+        $appRequest->memory = round(memory_get_peak_usage(true) / 1024 / 1024, 1);
 
-        $object->browser()->associate(BrowserDetails::autoInit());
+        $appRequest->controller_action = $event->request->route()?->getActionName();
+        $appRequest->controller_class = $event->request->route()?->getControllerClass();
 
-        return $object;
+        $appRequest->source()->associate(TrackerBot::getSource());
+        $appRequest->env()->associate(TrackerBot::getEnvironment());
+
+        return $appRequest;
     }
 
     /**

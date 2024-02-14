@@ -3,7 +3,7 @@
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\LogObject;
-use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
@@ -33,8 +33,8 @@ class LogListener extends Listener
             return;
         }
 
-        $this->logEntry(
-            EntryType::APP_LOG,
+        $this->recordEntry(
+            AppEntryType::APP_LOG,
             $this->prepareEventObject($event)
         );
     }

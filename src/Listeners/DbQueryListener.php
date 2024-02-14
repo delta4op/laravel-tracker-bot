@@ -3,7 +3,7 @@
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\DbQueryObject;
-use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Illuminate\Database\Events\QueryExecuted;
 
@@ -15,8 +15,8 @@ class DbQueryListener extends Listener
             return;
         }
 
-        $this->logEntry(
-            EntryType::DB_QUERY,
+        $this->recordEntry(
+            AppEntryType::DB_QUERY,
             $this->prepareEventObject($event)
         );
     }

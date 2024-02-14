@@ -4,7 +4,7 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Illuminate\Console\Events\CommandStarting;
-use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\ScheduleObject;
 
 class ScheduleListener extends Listener
@@ -20,8 +20,8 @@ class ScheduleListener extends Listener
         }
 
         if ($object = $this->prepareEventObject($event)) {
-            $this->logEntry(
-                EntryType::COMMAND_SCHEDULE,
+            $this->recordEntry(
+                AppEntryType::COMMAND_SCHEDULE,
                 $object
             );
         }

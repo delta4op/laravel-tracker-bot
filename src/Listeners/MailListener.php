@@ -3,7 +3,7 @@
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\MailObject;
-use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Illuminate\Mail\Events\MessageSent;
 use Symfony\Component\Mime\Address;
@@ -20,8 +20,8 @@ class MailListener extends Listener
             return;
         }
 
-        $this->logEntry(
-            EntryType::MAIL,
+        $this->recordEntry(
+            AppEntryType::MAIL,
             $this->prepareEventObject($event)
         );
     }

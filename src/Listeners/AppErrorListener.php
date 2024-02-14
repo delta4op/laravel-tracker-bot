@@ -3,7 +3,7 @@
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\objects\AppErrorObject;
-use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Delta4op\Laravel\TrackerBot\Support\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;
@@ -19,8 +19,8 @@ class AppErrorListener extends Listener
         }
 
         if ($object = $this->prepareEventObject($event)) {
-            $this->logEntry(
-                EntryType::APP_ERROR,
+            $this->recordEntry(
+                AppEntryType::APP_ERROR,
                 $object
             );
         }

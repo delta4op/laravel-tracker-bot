@@ -2,11 +2,15 @@
 
 namespace Delta4op\Laravel\TrackerBot\Facades;
 
+use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
+use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
 use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static bool isEnabled()
  * @method static bool isDisabled()
+ * @method static Source|null getSource()
+ * @method static Environment|null getEnvironment()
  *
  * @see \Delta4op\Laravel\TrackerBot\TrackerBot
  */

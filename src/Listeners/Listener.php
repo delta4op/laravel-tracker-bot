@@ -2,10 +2,8 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\common\Server;
-use Delta4op\Laravel\TrackerBot\DB\Models\EventEntry\AppEntry;
-use Delta4op\Laravel\TrackerBot\DB\Models\objects\EntryObject;
-use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\DB\Concerns\MetricsModel;
+use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
 use Delta4op\Laravel\TrackerBot\Support\FetchesStackTrace;
 
 abstract class Listener
@@ -19,32 +17,22 @@ abstract class Listener
         $this->options = config('tracker-bot.listeners.'.get_class(), []);
     }
 
-    protected function logEntry(EntryType $type, EntryObject $eventObject): AppEntry
+    /**
+     * @param MetricsModel $model
+     * @return AppEntry
+     */
+    protected function recordEntry(MetricsModel $model): AppEntry
     {
         $entry = new AppEntry;
-        $entry->type = $type;
-        $entry->server()->associate($this->getServer());
-        $entry->entryObject()->associate($eventObject);
+        $entry->source_id = $model->source_id;
+        $entry->env_id = $model->env_id;
         $entry->save();
 
-        $this->fireEntryLoggedEvent($entry);
+        $model->save();
+        $entry->metrics_model()->associate($model);
 
         return $entry;
     }
 
-    protected function getServer(): Server
-    {
-        $server = new Server;
-        $server->processId = getmypid();
-
-        return $server;
-    }
-
-    /**
-     * @return void
-     */
-    protected function fireEntryLoggedEvent($entry)
-    {
-        // todo
-    }
+    // todo fire events
 }

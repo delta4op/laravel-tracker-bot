@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\TrackerBot\Enums;
 
-enum EntryType: string
+enum ModelMorphKey: string
 {
     case APP_REQUEST = 'APP_REQUEST';
     case CLIENT_REQUEST = 'CLIENT_REQUEST';

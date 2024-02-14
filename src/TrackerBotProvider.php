@@ -2,6 +2,8 @@
 
 namespace Delta4op\Laravel\TrackerBot;
 
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest\AppRequest;
+use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Delta4op\Laravel\TrackerBot\Listeners\AppErrorListener;
 use Delta4op\Laravel\TrackerBot\Listeners\AppRequestListener;
 use Delta4op\Laravel\TrackerBot\Listeners\CacheListener;
@@ -19,6 +21,7 @@ use Illuminate\Cache\Events\KeyForgotten;
 use Illuminate\Cache\Events\KeyWritten;
 use Illuminate\Console\Events\CommandFinished;
 use Illuminate\Console\Events\CommandStarting;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Http\Client\Events\ConnectionFailed;
@@ -35,6 +38,8 @@ class TrackerBotProvider extends PackageServiceProvider
 {
     public function bootingPackage(): void
     {
+        $this->enableAppEntryTableMorphMaps();
+
         $this->listenAppErrors();
 
         $this->listenAppRequests();
@@ -54,6 +59,16 @@ class TrackerBotProvider extends PackageServiceProvider
         if ($this->app->bound('redis')) {
             $this->listenRedis();
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function enableAppEntryTableMorphMaps(): void
+    {
+        Relation::morphMap([
+            AppEntryType::APP_REQUEST->value => AppRequest::class,
+        ]);
     }
 
     /**

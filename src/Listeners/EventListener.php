@@ -8,7 +8,7 @@ use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Delta4op\Laravel\TrackerBot\Support\ExtractProperties;
 use Delta4op\Laravel\TrackerBot\Support\FormatsClosure;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Delta4op\Laravel\TrackerBot\Enums\EntryType;
+use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Support\Str;
 use ReflectionException;
@@ -31,8 +31,8 @@ class EventListener extends Listener
         }
 
 
-        $this->logEntry(
-            EntryType::EVENT,
+        $this->recordEntry(
+            AppEntryType::EVENT,
             $this->prepareEventObject($eventName, $payload)
         );
     }
