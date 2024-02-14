@@ -26,9 +26,13 @@ abstract class Listener
         $entry = new AppEntry;
         $entry->source_id = $model->source_id;
         $entry->env_id = $model->env_id;
+        $entry->family_hash = $model->family_hash;
         $entry->save();
 
         $model->save();
+        $model->entry_id = $entry->id;
+        $model->entry_uuid = $entry->uuid;
+        $model->batch_id = $entry->batchId;
         $entry->metrics_model()->associate($model);
 
         return $entry;

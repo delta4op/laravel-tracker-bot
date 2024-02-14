@@ -22,6 +22,8 @@ class Environment extends Model
 
     protected $table = 'environments';
 
+    protected $fillable = ['symbol'];
+
     /**
      * @return HasMany
      */

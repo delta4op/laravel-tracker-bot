@@ -22,6 +22,8 @@ class Source extends Model
 
     protected $table = 'sources';
 
+    protected $fillable = ['symbol'];
+
     /**
      * @return HasMany
      */

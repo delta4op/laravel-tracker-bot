@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property ?string $uuid
  * @property ?string $family_hash
  *
- * @property ?string $entry_id
+ * @property ?int $entry_id
  * @property ?string $entry_uuid
  * @property ?string $batch_id
  * @property ?int $source_id

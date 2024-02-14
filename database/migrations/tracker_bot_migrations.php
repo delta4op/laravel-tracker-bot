@@ -4,7 +4,6 @@ use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
 use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
 use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest\AppRequest;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
-use Delta4op\Laravel\TrackerBot\Enums\HttpContentType;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
 use Delta4op\Laravel\TrackerBot\Enums\RequestProtocol;
 use Illuminate\Database\Migrations\Migration;
@@ -88,8 +87,6 @@ return new class extends Migration
             $table->string('model_key', 150)->nullable();
             $table->unsignedBigInteger('model_id')->nullable();
 
-            $table->
-
             $table->timestamps();
         });
     }
@@ -123,7 +120,6 @@ return new class extends Migration
             // request data
             $table->enum('protocol', RequestProtocol::values())->nullable();
             $table->enum('method', HttpMethod::values());
-            $table->enum('content_type', HttpContentType::values());
             $table->string('host');
             $table->string('path');
             $table->string('url');
@@ -131,14 +127,13 @@ return new class extends Migration
             $table->jsonb('ips');
             $table->jsonb('middleware');
             $table->jsonb('headers');
-            $table->string('content');
+            $table->text('content');
             $table->jsonb('session');
             $table->jsonb('cookies');
 
             // response data
             $table->unsignedSmallInteger('response_status');
-            $table->string('response_content');
-            $table->enum('response_content_type', HttpContentType::values());
+            $table->text('response_content');
             $table->jsonb('response_headers');
 
             // metrics

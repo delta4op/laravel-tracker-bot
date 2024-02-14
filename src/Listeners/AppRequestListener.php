@@ -61,6 +61,8 @@ class AppRequestListener extends Listener
         $appRequest->source()->associate(TrackerBot::getSource());
         $appRequest->env()->associate(TrackerBot::getEnvironment());
 
+        $appRequest->family_hash = 'unset';
+
         return $appRequest;
     }
 
