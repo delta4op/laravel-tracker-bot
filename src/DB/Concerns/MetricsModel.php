@@ -3,10 +3,10 @@
 namespace Delta4op\Laravel\TrackerBot\DB\Concerns;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
+use Delta4op\Laravel\TrackerBot\DB\Models\BaseModel;
 use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
 use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Str;
@@ -26,7 +26,7 @@ use Illuminate\Support\Str;
  * @property ?Source $source
  * @property ?Environment $env
  */
-abstract class MetricsModel extends Model
+abstract class MetricsModel extends BaseModel
 {
     use HasTimestamps;
 

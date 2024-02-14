@@ -4,10 +4,10 @@ namespace Delta4op\Laravel\TrackerBot\DB\Models\AppEntry;
 
 use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
 use Delta4op\Laravel\TrackerBot\DB\EloquentBuilders\AppEntryEB;
+use Delta4op\Laravel\TrackerBot\DB\Models\BaseModel;
 use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
 use Delta4op\Laravel\TrackerBot\Support\BatchIdGenerator;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;
@@ -25,7 +25,7 @@ use Illuminate\Support\Str;
  * @property ?Environment $env
  * @method AppEntryEB query()
  */
-class AppEntry extends Model
+class AppEntry extends BaseModel
 {
     use HasTimestamps;
 
