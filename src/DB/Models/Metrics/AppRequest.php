@@ -3,10 +3,9 @@
 namespace Delta4op\Laravel\TrackerBot\DB\Models\Metrics;
 
 use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
-use Delta4op\Laravel\TrackerBot\DB\Concerns\MetricsModel;
-use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
-use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
-use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
+use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry;
+use Delta4op\Laravel\TrackerBot\DB\Models\Environment;
+use Delta4op\Laravel\TrackerBot\DB\Models\Source;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
 
 /**

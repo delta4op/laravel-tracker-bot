@@ -3,7 +3,6 @@
 namespace Delta4op\Laravel\TrackerBot\DB\Models\Metrics;
 
 use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
-use Delta4op\Laravel\TrackerBot\DB\Concerns\MetricsModel;
 
 /**
  * @property ?string $connection

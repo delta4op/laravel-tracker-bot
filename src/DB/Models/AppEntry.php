@@ -1,12 +1,9 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models\AppEntry;
+namespace Delta4op\Laravel\TrackerBot\DB\Models;
 
 use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
 use Delta4op\Laravel\TrackerBot\DB\EloquentBuilders\AppEntryEB;
-use Delta4op\Laravel\TrackerBot\DB\Models\BaseModel;
-use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
-use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
 use Delta4op\Laravel\TrackerBot\Support\BatchIdGenerator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -65,6 +62,6 @@ class AppEntry extends BaseModel
      */
     public function env(): BelongsTo
     {
-        return $this->belongsTo(Source::class, 'env_id', 'id');
+        return $this->belongsTo(Environment::class, 'env_id', 'id');
     }
 }

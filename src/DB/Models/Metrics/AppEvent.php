@@ -15,7 +15,7 @@ use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
  * @property ?array $trace
  * @property ?array $linePreview
  */
-class AppError extends MetricsModel
+class AppEvent extends MetricsModel
 {
     use HasTimestamps;
 

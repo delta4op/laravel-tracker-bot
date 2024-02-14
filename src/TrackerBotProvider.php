@@ -2,7 +2,9 @@
 
 namespace Delta4op\Laravel\TrackerBot;
 
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppError;
 use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\DbQuery;
 use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
 use Delta4op\Laravel\TrackerBot\Listeners\AppErrorListener;
 use Delta4op\Laravel\TrackerBot\Listeners\AppRequestListener;
@@ -68,6 +70,8 @@ class TrackerBotProvider extends PackageServiceProvider
     {
         Relation::morphMap([
             AppEntryType::APP_REQUEST->value => AppRequest::class,
+            AppEntryType::APP_ERROR->value => AppError::class,
+            AppEntryType::DB_QUERY->value => DbQuery::class,
         ]);
     }
 

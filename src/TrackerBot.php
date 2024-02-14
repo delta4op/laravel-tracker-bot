@@ -2,8 +2,8 @@
 
 namespace Delta4op\Laravel\TrackerBot;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
-use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
+use Delta4op\Laravel\TrackerBot\DB\Models\Environment;
+use Delta4op\Laravel\TrackerBot\DB\Models\Source;
 use Illuminate\Support\Str;
 
 class TrackerBot

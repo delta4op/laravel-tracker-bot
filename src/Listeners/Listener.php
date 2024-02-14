@@ -2,8 +2,8 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Concerns\MetricsModel;
-use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
+use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\MetricsModel;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Delta4op\Laravel\TrackerBot\Support\FetchesStackTrace;
 use Illuminate\Support\Str;

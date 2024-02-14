@@ -1,12 +1,12 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Concerns;
+namespace Delta4op\Laravel\TrackerBot\DB\Models\Metrics;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
+use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry;
 use Delta4op\Laravel\TrackerBot\DB\Models\BaseModel;
-use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
-use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
+use Delta4op\Laravel\TrackerBot\DB\Models\Environment;
+use Delta4op\Laravel\TrackerBot\DB\Models\Source;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Str;
