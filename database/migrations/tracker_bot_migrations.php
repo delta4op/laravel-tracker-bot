@@ -110,7 +110,7 @@ return new class extends Migration
             $table->string('path');
             $table->string('url');
             $table->text('full_url');
-            $table->text('query_string');
+            $table->text('query_string')->nullable();
             $table->ipAddress('ip');
             $table->jsonb('ips');
             $table->jsonb('middleware');
