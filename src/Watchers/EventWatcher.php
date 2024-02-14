@@ -1,12 +1,12 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Watchers;
+namespace Delta4op\Laravel\Tracker\Watchers;
 
 use Closure;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\Event;
-use Delta4op\Laravel\TrackerBot\Tracker;
-use Delta4op\Laravel\TrackerBot\Support\ExtractProperties;
-use Delta4op\Laravel\TrackerBot\Support\FormatsClosure;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Event;
+use Delta4op\Laravel\Tracker\Tracker;
+use Delta4op\Laravel\Tracker\Support\ExtractProperties;
+use Delta4op\Laravel\Tracker\Support\FormatsClosure;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;

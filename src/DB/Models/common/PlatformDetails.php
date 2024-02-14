@@ -1,9 +1,9 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models\common;
+namespace Delta4op\Laravel\Tracker\DB\Models\common;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\BaseModel;
-use Delta4op\Laravel\TrackerBot\Enums\Platform;
+use Delta4op\Laravel\Tracker\DB\Models\BaseModel;
+use Delta4op\Laravel\Tracker\Enums\Platform;
 
 /**
  * @property ?Platform $type

@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\EloquentRepositories;
+namespace Delta4op\Laravel\Tracker\DB\EloquentRepositories;
 
 class EloquentRepository
 {

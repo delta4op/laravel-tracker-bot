@@ -1,11 +1,11 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Watchers;
+namespace Delta4op\Laravel\Tracker\Watchers;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
-use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
-use Delta4op\Laravel\TrackerBot\Tracker;
-use Delta4op\Laravel\TrackerBot\Support\FormatModel;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppRequest;
+use Delta4op\Laravel\Tracker\Enums\HttpMethod;
+use Delta4op\Laravel\Tracker\Tracker;
+use Delta4op\Laravel\Tracker\Support\FormatModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\Events\RequestHandled;

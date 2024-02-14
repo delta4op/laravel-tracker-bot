@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Enums;
+namespace Delta4op\Laravel\Tracker\Enums;
 
 enum QuerySpeedStandard: int
 {

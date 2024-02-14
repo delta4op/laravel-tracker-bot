@@ -1,9 +1,9 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Watchers;
+namespace Delta4op\Laravel\Tracker\Watchers;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppDump;
-use Delta4op\Laravel\TrackerBot\Tracker;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppDump;
+use Delta4op\Laravel\Tracker\Tracker;
 use Exception;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Contracts\Foundation\Application;

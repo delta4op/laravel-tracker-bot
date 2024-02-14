@@ -1,8 +1,8 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot;
+namespace Delta4op\Laravel\Tracker;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\Source;
+use Delta4op\Laravel\Tracker\DB\Models\Source;
 use Illuminate\Support\Str;
 
 trait ProvidesSource

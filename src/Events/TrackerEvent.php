@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Events;
+namespace Delta4op\Laravel\Tracker\Events;
 
 abstract class TrackerEvent
 {

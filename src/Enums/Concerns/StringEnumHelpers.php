@@ -1,8 +1,8 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Enums\Concerns;
+namespace Delta4op\Laravel\Tracker\Enums\Concerns;
 
-use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
+use Delta4op\Laravel\Tracker\Enums\HttpMethod;
 
 trait StringEnumHelpers
 {

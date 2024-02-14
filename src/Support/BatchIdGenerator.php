@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Support;
+namespace Delta4op\Laravel\Tracker\Support;
 
 class BatchIdGenerator
 {

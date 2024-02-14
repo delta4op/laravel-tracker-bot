@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Helpers;
+namespace Delta4op\Laravel\Tracker\Helpers;
 
 use Illuminate\Support\Str;
 

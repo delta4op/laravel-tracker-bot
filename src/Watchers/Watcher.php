@@ -1,8 +1,8 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Watchers;
+namespace Delta4op\Laravel\Tracker\Watchers;
 
-use Delta4op\Laravel\TrackerBot\Support\FetchesStackTrace;
+use Delta4op\Laravel\Tracker\Support\FetchesStackTrace;
 use Illuminate\Contracts\Foundation\Application;
 
 abstract class Watcher

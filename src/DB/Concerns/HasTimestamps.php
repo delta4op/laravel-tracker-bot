@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Concerns;
+namespace Delta4op\Laravel\Tracker\DB\Concerns;
 
 use Carbon\Carbon;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models\Metrics;
+namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
-use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
-use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry;
-use Delta4op\Laravel\TrackerBot\DB\Models\Environment;
-use Delta4op\Laravel\TrackerBot\DB\Models\Source;
-use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
+use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\DB\Models\AppEntry;
+use Delta4op\Laravel\Tracker\DB\Models\Environment;
+use Delta4op\Laravel\Tracker\DB\Models\Source;
+use Delta4op\Laravel\Tracker\Enums\HttpMethod;
 
 /**
  * @property ?string $protocol

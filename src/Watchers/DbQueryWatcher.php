@@ -1,10 +1,10 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Watchers;
+namespace Delta4op\Laravel\Tracker\Watchers;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\DbQuery;
-use Delta4op\Laravel\TrackerBot\Helpers\FileHelpers;
-use Delta4op\Laravel\TrackerBot\Tracker;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\DbQuery;
+use Delta4op\Laravel\Tracker\Helpers\FileHelpers;
+use Delta4op\Laravel\Tracker\Tracker;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Events\QueryExecuted;
 use PDOException;

@@ -9,9 +9,9 @@
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
-            "role": "Developer"
+            "name": "Ravish Patel",
+            "email": "gitwithravish@gmail.com",
+            "role": "Co-Founder & CTO at SYSOTEL.AI"
         }
     ],
     "require": {
@@ -36,12 +36,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Delta4op\\Laravel\\TrackerBot\\": "src/"
+            "Delta4op\\Laravel\\Tracker\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Delta4op\\Laravel\\TrackerBot\\Tests\\": "tests/"
+
         }
     },
     "scripts": {

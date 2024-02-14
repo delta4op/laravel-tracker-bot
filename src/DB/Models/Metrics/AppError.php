@@ -1,8 +1,8 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models\Metrics;
+namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
-use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
 
 /**
  * @property ?string $class

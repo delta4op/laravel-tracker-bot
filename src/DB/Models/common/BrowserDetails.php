@@ -1,10 +1,10 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models\common;
+namespace Delta4op\Laravel\Tracker\DB\Models\common;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\BaseModel;
-use Delta4op\Laravel\TrackerBot\Enums\BrowserType;
-use Delta4op\Laravel\TrackerBot\Enums\OperatingSystem;
+use Delta4op\Laravel\Tracker\DB\Models\BaseModel;
+use Delta4op\Laravel\Tracker\Enums\BrowserType;
+use Delta4op\Laravel\Tracker\Enums\OperatingSystem;
 use hisorange\BrowserDetect\Facade as Browser;
 
 /**

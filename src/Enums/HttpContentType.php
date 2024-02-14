@@ -1,8 +1,8 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Enums;
+namespace Delta4op\Laravel\Tracker\Enums;
 
-use Delta4op\Laravel\TrackerBot\Enums\Concerns\StringEnumHelpers;
+use Delta4op\Laravel\Tracker\Enums\Concerns\StringEnumHelpers;
 
 enum HttpContentType: string
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models;
+namespace Delta4op\Laravel\Tracker\DB\Models;
 
-use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
+use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 

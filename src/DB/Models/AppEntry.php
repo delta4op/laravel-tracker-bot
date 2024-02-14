@@ -1,10 +1,10 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models;
+namespace Delta4op\Laravel\Tracker\DB\Models;
 
-use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
-use Delta4op\Laravel\TrackerBot\DB\EloquentBuilders\AppEntryEB;
-use Delta4op\Laravel\TrackerBot\Support\BatchIdGenerator;
+use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\DB\EloquentBuilders\AppEntryEB;
+use Delta4op\Laravel\Tracker\Support\BatchIdGenerator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;

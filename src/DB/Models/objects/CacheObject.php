@@ -1,8 +1,8 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models\objects;
+namespace Delta4op\Laravel\Tracker\DB\Models\objects;
 
-use Delta4op\Laravel\TrackerBot\Enums\CacheEventType;
+use Delta4op\Laravel\Tracker\Enums\CacheEventType;
 
 /**
  * @property ?CacheEventType $type

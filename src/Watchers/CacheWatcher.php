@@ -1,10 +1,10 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Watchers;
+namespace Delta4op\Laravel\Tracker\Watchers;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\CacheEvent;
-use Delta4op\Laravel\TrackerBot\Enums\CacheEventType;
-use Delta4op\Laravel\TrackerBot\Tracker;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\CacheEvent;
+use Delta4op\Laravel\Tracker\Enums\CacheEventType;
+use Delta4op\Laravel\Tracker\Tracker;
 use Illuminate\Cache\Events\CacheHit;
 use Illuminate\Cache\Events\CacheMissed;
 use Illuminate\Cache\Events\KeyForgotten;

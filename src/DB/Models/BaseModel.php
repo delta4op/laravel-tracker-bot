@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models;
+namespace Delta4op\Laravel\Tracker\DB\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

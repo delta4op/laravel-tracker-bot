@@ -1,9 +1,9 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\Watchers;
+namespace Delta4op\Laravel\Tracker\Watchers;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\RedisEvent;
-use Delta4op\Laravel\TrackerBot\Tracker;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\RedisEvent;
+use Delta4op\Laravel\Tracker\Tracker;
 use Illuminate\Redis\Events\CommandExecuted;
 
 class RedisWatcher extends Watcher

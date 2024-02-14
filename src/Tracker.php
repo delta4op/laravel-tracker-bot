@@ -1,9 +1,9 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot;
+namespace Delta4op\Laravel\Tracker;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\MetricsModel;
+use Delta4op\Laravel\Tracker\DB\Models\AppEntry;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\MetricsModel;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Testing\Fakes\EventFake;
 

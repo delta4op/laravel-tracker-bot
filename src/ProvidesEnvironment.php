@@ -1,8 +1,8 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot;
+namespace Delta4op\Laravel\Tracker;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\Environment;
+use Delta4op\Laravel\Tracker\DB\Models\Environment;
 use Illuminate\Support\Str;
 
 trait ProvidesEnvironment

@@ -1,21 +1,21 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot;
+namespace Delta4op\Laravel\Tracker;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppDump;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppError;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\ClientRequest;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\Event;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\Log;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\CacheEvent;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\ConsoleCommandLog;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\ConsoleSchedule;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\DbQuery;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\Mail;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\RedisEvent;
-use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
-use Delta4op\Laravel\TrackerBot\Support\BatchIdGenerator;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppDump;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppError;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\ClientRequest;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Event;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Log;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppRequest;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\CacheEvent;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\ConsoleCommandLog;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\ConsoleSchedule;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\DbQuery;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Mail;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\RedisEvent;
+use Delta4op\Laravel\Tracker\Enums\AppEntryType;
+use Delta4op\Laravel\Tracker\Support\BatchIdGenerator;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Str;
 use Spatie\LaravelPackageTools\Package;

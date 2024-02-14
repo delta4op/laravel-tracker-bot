@@ -1,8 +1,8 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\Models\objects;
+namespace Delta4op\Laravel\Tracker\DB\Models\objects;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\BaseModel;
+use Delta4op\Laravel\Tracker\DB\Models\BaseModel;
 
 class EntryObject extends BaseModel
 {

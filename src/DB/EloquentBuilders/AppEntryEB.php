@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta4op\Laravel\TrackerBot\DB\EloquentBuilders;
+namespace Delta4op\Laravel\Tracker\DB\EloquentBuilders;
 
 class AppEntryEB extends EloquentBuilder
 {
