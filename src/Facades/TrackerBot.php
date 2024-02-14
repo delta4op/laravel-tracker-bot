@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool isDisabled()
  * @method static Source|null getSource()
  * @method static Environment|null getEnvironment()
+ * @method static array config()
+ * @method static string dbConnection()
  *
  * @see \Delta4op\Laravel\TrackerBot\TrackerBot
  */

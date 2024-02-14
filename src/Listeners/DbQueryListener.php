@@ -15,7 +15,7 @@ class DbQueryListener extends Listener
      */
     public function handle(QueryExecuted $event): void
     {
-        if (!TrackerBot::isEnabled() || $this->isTrackerBotQuery($event)) {
+        if (!TrackerBot::isEnabled() || $this->options['enabled'] !== true || $this->isTrackerBotQuery($event)) {
             return;
         }
 

@@ -17,7 +17,7 @@ class AppErrorListener extends Listener
      */
     public function handle(MessageLogged $event): void
     {
-        if (!TrackerBot::isEnabled() || $this->shouldIgnore($event)) {
+        if (!TrackerBot::isEnabled() || $this->options['enabled'] !== true || $this->shouldIgnore($event)) {
             return;
         }
 

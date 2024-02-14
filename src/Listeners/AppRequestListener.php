@@ -21,7 +21,7 @@ class AppRequestListener extends Listener
 {
     public function handle(RequestHandled $event): void
     {
-        if(!TrackerBot::isEnabled()) {
+        if(!TrackerBot::isEnabled() || $this->options['enabled'] !== true) {
             return;
         }
 

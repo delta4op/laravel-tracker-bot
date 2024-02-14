@@ -58,4 +58,20 @@ class TrackerBot
     {
         return !static::isEnabled();
     }
+
+    /**
+     * @return array
+     */
+    public function config(): array
+    {
+        return $this->configs;
+    }
+
+    /**
+     * @return string
+     */
+    public function dbConnection(): string
+    {
+        return $this->configs['storage']['database']['connection'] ?? '';
+    }
 }
