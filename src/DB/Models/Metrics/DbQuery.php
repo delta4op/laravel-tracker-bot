@@ -6,26 +6,22 @@ use Delta4op\Laravel\TrackerBot\DB\Concerns\HasTimestamps;
 use Delta4op\Laravel\TrackerBot\DB\Concerns\MetricsModel;
 
 /**
- * @property ?string $class
+ * @property ?string $connection
+ * @property ?string $query
+ * @property ?float $time
  * @property ?string $file
  * @property ?boolean $is_internal_file
- * @property ?string $code
  * @property ?int $line
- * @property ?string $message
- * @property ?array $context
- * @property ?array $trace
- * @property ?array $linePreview
+ * @property ?array $bindings
  */
-class AppError extends MetricsModel
+class DbQuery extends MetricsModel
 {
     use HasTimestamps;
 
-    protected $table = 'app_errors';
+    protected $table = 'db_queries';
 
     protected $casts = [
-        'context' => 'array',
-        'trace' => 'array',
-        'linePreview' => 'array',
+        'bindings' => 'array',
     ];
 
     /**
@@ -33,6 +29,6 @@ class AppError extends MetricsModel
      */
     public function calculateFamilyHash(): string
     {
-        return 'unset';
+        return md5($this->query ?? '');
     }
 }

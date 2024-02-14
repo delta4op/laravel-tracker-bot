@@ -4,6 +4,7 @@ use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
 use Delta4op\Laravel\TrackerBot\DB\Models\Environment\Environment;
 use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppError;
 use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\DbQuery;
 use Delta4op\Laravel\TrackerBot\DB\Models\Source\Source;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
 use Illuminate\Database\Migrations\Migration;
@@ -23,6 +24,7 @@ return new class extends Migration
         $this->appEntriesSchema();
         $this->appRequestsSchema();
         $this->appErrorSchema();
+        $this->appDbQuerySchema();
     }
 
     /**
@@ -149,12 +151,36 @@ return new class extends Migration
             // request data
             $table->string('class');
             $table->string('file');
+            $table->boolean('is_internal_file');
             $table->string('code');
             $table->unsignedInteger('line');
             $table->string('message');
             $table->jsonb('context');
             $table->jsonb('trace');
             $table->jsonb('linePreview');
+
+            // timestamps
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * @return void
+     */
+    protected function appDbQuerySchema(): void
+    {
+        $this->schemaBuilder()->create((new DbQuery)->getTable(), function (Blueprint $table) {
+
+            $this->commonTableConfigurationForMetrics($table);
+
+            // query data
+            $table->string('connection');
+            $table->text('query');
+            $table->float('time');
+            $table->string('file')->nullable();
+            $table->boolean('is_internal_file')->nullable();
+            $table->unsignedInteger('line')->nullable();
+            $table->jsonb('bindings')->nullable();
 
             // timestamps
             $table->timestamps();

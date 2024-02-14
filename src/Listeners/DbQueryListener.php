@@ -2,23 +2,26 @@
 
 namespace Delta4op\Laravel\TrackerBot\Listeners;
 
-use Delta4op\Laravel\TrackerBot\DB\Models\objects\DbQueryObject;
-use Delta4op\Laravel\TrackerBot\Enums\AppEntryType;
+use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\DbQuery;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Illuminate\Database\Events\QueryExecuted;
+use PDOException;
 
 class DbQueryListener extends Listener
 {
+    /**
+     * @param QueryExecuted $event
+     * @return void
+     */
     public function handle(QueryExecuted $event): void
     {
         if (!TrackerBot::isEnabled() || $this->isTrackerBotQuery($event)) {
             return;
         }
 
-//        $this->recordEntry(
-//            AppEntryType::DB_QUERY,
-//            $this->prepareEventObject($event)
-//        );
+        $this->recordEntry(
+            $this->prepareQueryModel($event)
+        );
     }
 
     /**
@@ -30,53 +33,35 @@ class DbQueryListener extends Listener
         return $event->connectionName === config('tracker-bot.storage.connection');
     }
 
-    protected function prepareEventObject(QueryExecuted $event): DbQueryObject
+    protected function prepareQueryModel(QueryExecuted $event): DbQuery
     {
-        $object = new DbQueryObject();
+        $dbQuery = new DbQuery();
 
-        $object->connection = $event->connectionName;
-        $object->bindings = $event->bindings;
-        $object->query = $this->replaceBindings($event);
-        $object->time = $event->time; // millis
-        $object->hash = $this->familyHash($event);
+        $dbQuery->connection = $event->connectionName;
+        $dbQuery->query = $this->replaceBindings($event);
+        $dbQuery->time = $event->time; // millis
+        $dbQuery->bindings = $event->bindings;
+
 
         if ($caller = $this->getCallerFromStackTrace()) {
-            $object->file = $caller['file'] ?? null;
-            $object->line = $caller['line'] ?? null;
+            $dbQuery->file = $caller['file'] ?? null;
+            $dbQuery->line = $caller['line'] ?? null;
+
+            if (is_string($dbQuery->file)) {
+                $dbQuery->is_internal_file = $this->isInternalFile($dbQuery->file);
+            }
         }
 
-        return $object;
-    }
-
-    /**
-     * Get the tags for the query.
-     *
-     * @param  QueryExecuted  $event
-     * @return array
-     */
-    protected function tags($event)
-    {
-        return isset($this->options['slow']) && $event->time >= $this->options['slow'] ? ['slow'] : [];
-    }
-
-    /**
-     * Calculate the family look-up hash for the query event.
-     *
-     * @param  QueryExecuted  $event
-     * @return string
-     */
-    public function familyHash($event)
-    {
-        return md5($event->sql);
+        return $dbQuery;
     }
 
     /**
      * Format the given bindings to strings.
      *
-     * @param  QueryExecuted  $event
+     * @param QueryExecuted $event
      * @return array
      */
-    protected function formatBindings($event)
+    protected function formatBindings(QueryExecuted $event): array
     {
         return $event->connection->prepareBindings($event->bindings);
     }
@@ -84,10 +69,10 @@ class DbQueryListener extends Listener
     /**
      * Replace the placeholders with the actual bindings.
      *
-     * @param  QueryExecuted  $event
+     * @param QueryExecuted $event
      * @return string
      */
-    public function replaceBindings($event)
+    public function replaceBindings(QueryExecuted $event): string
     {
         $sql = $event->sql;
 
@@ -98,7 +83,7 @@ class DbQueryListener extends Listener
 
             if ($binding === null) {
                 $binding = 'null';
-            } elseif (! is_int($binding) && ! is_float($binding)) {
+            } elseif (!is_int($binding) && !is_float($binding)) {
                 $binding = $this->quoteStringBinding($event, $binding);
             }
 
@@ -111,15 +96,16 @@ class DbQueryListener extends Listener
     /**
      * Add quotes to string bindings.
      *
-     * @param  QueryExecuted  $event
-     * @param  string  $binding
+     * @param QueryExecuted $event
+     * @param string $binding
      * @return string
+     * @throws \Throwable
      */
-    protected function quoteStringBinding($event, $binding)
+    protected function quoteStringBinding(QueryExecuted $event, $binding): string
     {
         try {
             return $event->connection->getPdo()->quote($binding);
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             throw_if($e->getCode() !== 'IM001', $e);
         }
 
@@ -132,6 +118,6 @@ class DbQueryListener extends Listener
             '\\' => '\\\\',
         ]);
 
-        return "'".$binding."'";
+        return "'" . $binding . "'";
     }
 }

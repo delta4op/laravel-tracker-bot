@@ -9,7 +9,7 @@ namespace Delta4op\Laravel\TrackerBot\DB\Models\objects;
  * @property ?float $time
  * @property ?string $file
  * @property ?bool $isInternalFile
- * @property ?string $line
+ * @property ?int $line
  * @property ?string $hash
  * @property ?int $speedRate
  * @property ?boolean $slow

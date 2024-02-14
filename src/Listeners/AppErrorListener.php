@@ -41,6 +41,7 @@ class AppErrorListener extends Listener
 
         $appError->class = get_class($exception);
         $appError->file = $exception->getFile();
+        $appError->is_internal_file = $this->isInternalFile($exception->getFile());
         $appError->line = $exception->getLine();
         $appError->code = (string) $exception->getCode();
         $appError->message = $exception->getMessage();
@@ -48,7 +49,7 @@ class AppErrorListener extends Listener
         $appError->linePreview = ExceptionContext::get($exception);
         $appError->context = transform(Arr::except($event->context, ['exception', 'trackerbot']), function ($context) {
             return ! empty($context) ? $context : null;
-        });
+        }) ?? [];
 
         return $appError;
     }

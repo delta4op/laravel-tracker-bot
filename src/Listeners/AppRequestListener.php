@@ -4,7 +4,6 @@ namespace Delta4op\Laravel\TrackerBot\Listeners;
 
 use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
 use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
-use Delta4op\Laravel\TrackerBot\Enums\RequestProtocol;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Delta4op\Laravel\TrackerBot\Support\FormatModel;
 use Illuminate\Database\Eloquent\Model;
@@ -39,7 +38,7 @@ class AppRequestListener extends Listener
         $appRequest->host = $event->request->host();
         $appRequest->path = $event->request->path();
         $appRequest->url = $event->request->url();
-        $appRequest->full_url = $event->request->fullUrlWithQuery();
+        $appRequest->full_url = $event->request->fullUrl();
         $appRequest->query_string = $event->request->getQueryString();
         $appRequest->ip = $event->request->ip();
         $appRequest->ips = $event->request->ips();

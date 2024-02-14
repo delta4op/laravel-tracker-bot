@@ -6,6 +6,7 @@ use Delta4op\Laravel\TrackerBot\DB\Concerns\MetricsModel;
 use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry\AppEntry;
 use Delta4op\Laravel\TrackerBot\Facades\TrackerBot;
 use Delta4op\Laravel\TrackerBot\Support\FetchesStackTrace;
+use Illuminate\Support\Str;
 
 abstract class Listener
 {
@@ -25,7 +26,7 @@ abstract class Listener
     protected function recordEntry(MetricsModel $model): AppEntry
     {
         if(!$model->family_hash) {
-            $model->calculateFamilyHash();
+            $model->setFamilyHash();
         }
 
         $source = TrackerBot::getSource();
@@ -53,15 +54,14 @@ abstract class Listener
     }
 
     /**
-     * @param MetricsModel $model
-     * @return MetricsModel
+     * Determine whether a file should be considered internal.
      */
-    protected function attachSourceAndEnvironmentToMetricsModel(MetricsModel $model): MetricsModel
+    protected function isInternalFile(string $file): bool
     {
-        $model->source()->associate(TrackerBot::getSource());
-        $model->env()->associate(TrackerBot::getEnvironment());
-        return $model;
+        return Str::startsWith($file, base_path('vendor'.DIRECTORY_SEPARATOR.'laravel'.DIRECTORY_SEPARATOR.'pulse'))
+            || Str::startsWith($file, base_path('vendor'.DIRECTORY_SEPARATOR.'laravel'.DIRECTORY_SEPARATOR.'framework'))
+            || $file === base_path('artisan')
+            || $file === public_path('index.php');
     }
-
     // todo fire events
 }
