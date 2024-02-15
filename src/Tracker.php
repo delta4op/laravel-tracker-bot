@@ -46,7 +46,7 @@ class Tracker
      */
     public static function config(): array
     {
-        return config('tracker-bot');
+        return config('tracker');
     }
 
     /**
@@ -55,7 +55,7 @@ class Tracker
      */
     public static function start(Application $app): void
     {
-        if (!filter_var(config('tracker-bot.enabled', false), FILTER_VALIDATE_BOOLEAN)) {
+        if (!filter_var(config('tracker.enabled', false), FILTER_VALIDATE_BOOLEAN)) {
             return;
         }
 
