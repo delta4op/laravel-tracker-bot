@@ -58,7 +58,7 @@ class AppRequest extends MetricsModel
         return md5(
             ($this->secure ? 'secure' : 'not-secure') .
             ($this->method?->value ?? '') .
-            ($this->full_url ?? '')
+            ($this->full_url ?? ''),
             ($this->content ?? '')
         );
     }
