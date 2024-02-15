@@ -15,6 +15,7 @@ use Delta4op\Laravel\Tracker\DB\Models\Metrics\Mail;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\RedisEvent;
 use Delta4op\Laravel\Tracker\DB\Models\Source;
 use Delta4op\Laravel\Tracker\Enums\CacheEventType;
+use Delta4op\Laravel\Tracker\Enums\Database;
 use Delta4op\Laravel\Tracker\Enums\HttpMethod;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -201,6 +202,7 @@ return new class extends Migration
 
             // query data
             $table->string('connection');
+            $table->enum('db', Database::values());
             $table->text('query');
             $table->float('time');
             $table->string('file')->nullable();
@@ -281,7 +283,6 @@ return new class extends Migration
 
             // query data
             $table->string('command');
-            $table->text('command_class');
             $table->unsignedSmallInteger('exitCode');
             $table->jsonb('arguments')->nullable();
             $table->jsonb('options')->nullable();
@@ -304,6 +305,7 @@ return new class extends Migration
             // query data
             $table->string('command');
             $table->text('description');
+            $table->string('expression');
             $table->string('expression');
             $table->string('timezone');
             $table->jsonb('config')->nullable();

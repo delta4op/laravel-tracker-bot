@@ -7,7 +7,7 @@ use Delta4op\Laravel\Tracker\Enums\HttpMethod;
 use Delta4op\Laravel\Tracker\Tracker;
 use Delta4op\Laravel\Tracker\Support\FormatModel;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;

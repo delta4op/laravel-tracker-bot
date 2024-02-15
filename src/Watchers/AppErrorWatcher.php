@@ -6,7 +6,7 @@ use Delta4op\Laravel\Tracker\DB\Models\Metrics\Error;
 use Delta4op\Laravel\Tracker\Helpers\FileHelpers;
 use Delta4op\Laravel\Tracker\Support\ExceptionContext;
 use Delta4op\Laravel\Tracker\Tracker;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
 use Throwable;

@@ -7,7 +7,7 @@ use Delta4op\Laravel\Tracker\DB\Models\Metrics\Event;
 use Delta4op\Laravel\Tracker\Tracker;
 use Delta4op\Laravel\Tracker\Support\ExtractProperties;
 use Delta4op\Laravel\Tracker\Support\FormatsClosure;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Support\Str;

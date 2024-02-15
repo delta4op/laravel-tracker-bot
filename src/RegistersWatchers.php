@@ -3,7 +3,7 @@
 namespace Delta4op\Laravel\Tracker;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 
 trait RegistersWatchers
 {
@@ -12,7 +12,7 @@ trait RegistersWatchers
      *
      * @var array
      */
-    protected static $watchers = [];
+    protected static array $watchers = [];
 
     /**
      * Determine if a given watcher has been registered.
@@ -20,7 +20,7 @@ trait RegistersWatchers
      * @param string $class
      * @return bool
      */
-    public static function hasWatcher($class)
+    public static function hasWatcher(string $class): bool
     {
         return in_array($class, static::$watchers);
     }

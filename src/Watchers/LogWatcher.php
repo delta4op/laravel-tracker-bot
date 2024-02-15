@@ -4,7 +4,7 @@ namespace Delta4op\Laravel\Tracker\Watchers;
 
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\Log;
 use Delta4op\Laravel\Tracker\Tracker;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
 use Psr\Log\LogLevel;

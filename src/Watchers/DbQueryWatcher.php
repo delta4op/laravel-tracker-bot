@@ -3,9 +3,10 @@
 namespace Delta4op\Laravel\Tracker\Watchers;
 
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\DbQuery;
+use Delta4op\Laravel\Tracker\Enums\Database;
 use Delta4op\Laravel\Tracker\Helpers\FileHelpers;
 use Delta4op\Laravel\Tracker\Tracker;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 use Illuminate\Database\Events\QueryExecuted;
 use PDOException;
 use Throwable;
@@ -52,6 +53,7 @@ class DbQueryWatcher extends Watcher
         $dbQuery = new DbQuery();
 
         $dbQuery->connection = $event->connectionName;
+        $dbQuery->db = $this->resolveDatabase($event);
         $dbQuery->query = $this->replaceBindings($event);
         $dbQuery->time = $event->time; // millis
         $dbQuery->bindings = $event->bindings;
@@ -70,6 +72,22 @@ class DbQueryWatcher extends Watcher
     }
 
     /**
+     * @param QueryExecuted $event
+     * @return Database
+     */
+    protected function resolveDatabase(QueryExecuted $event): Database
+    {
+        return match($event->connection->getDriverName()){
+            'mysql' => Database::MYSQL,
+            'mongodb' => Database::MONGODB,
+            'sqlite' => Database::SQLITE,
+            'postgresql' => Database::POSTGRESQL,
+            'sqlsrv' => Database::SQLSRV,
+            default => Database::OTHER,
+        };
+    }
+
+    /**
      * Format the given bindings to strings.
      *
      * @param QueryExecuted $event
@@ -85,6 +103,7 @@ class DbQueryWatcher extends Watcher
      *
      * @param QueryExecuted $event
      * @return string
+     * @throws Throwable
      */
     public function replaceBindings(QueryExecuted $event): string
     {

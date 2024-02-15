@@ -4,7 +4,7 @@ namespace Delta4op\Laravel\Tracker\Watchers;
 
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\ClientRequest;
 use Delta4op\Laravel\Tracker\Tracker;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Client\Events\ConnectionFailed;
 use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Client\Request;

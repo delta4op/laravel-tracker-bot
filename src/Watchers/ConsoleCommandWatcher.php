@@ -4,7 +4,7 @@ namespace Delta4op\Laravel\Tracker\Watchers;
 
 use Delta4op\Laravel\Tracker\Tracker;
 use Illuminate\Console\Events\CommandFinished;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\ConsoleCommandLog;
 
 class ConsoleCommandWatcher extends Watcher
@@ -37,14 +37,14 @@ class ConsoleCommandWatcher extends Watcher
      */
     protected function prepareConsoleCommandLog(CommandFinished $event): ConsoleCommandLog
     {
-        $object = new ConsoleCommandLog;
+        $log = new ConsoleCommandLog;
 
-        $object->command = $event->command;
-        $object->exitCode = $event->exitCode;
-        $object->arguments = $event->input->getArguments();
-        $object->options = $event->input->getOptions();
+        $log->command = $event->command;
+        $log->exitCode = $event->exitCode;
+        $log->arguments = $event->input->getArguments();
+        $log->options = $event->input->getOptions();
 
-        return $object;
+        return $log;
     }
 
     /**
@@ -54,6 +54,7 @@ class ConsoleCommandWatcher extends Watcher
     {
         return
             !$this->isWatcherEnabled() ||
+            !is_string($event->command) ||
             in_array($event->command, array_merge($this->options['ignore'] ?? [], [
                 'schedule:run',
                 'schedule:finish',

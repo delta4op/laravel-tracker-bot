@@ -3,9 +3,12 @@
 namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
 use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\Enums\Database;
 
 /**
  * @property ?string $connection
+ * @property ?string $driver
+ * @property ?Database $db
  * @property ?string $query
  * @property ?float $time
  * @property ?string $file
@@ -21,6 +24,7 @@ class DbQuery extends MetricsModel
 
     protected $casts = [
         'bindings' => 'array',
+        'db' => Database::class,
     ];
 
     /**

@@ -4,7 +4,8 @@ namespace Delta4op\Laravel\Tracker;
 
 use Delta4op\Laravel\Tracker\DB\Models\Entry;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\MetricsModel;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Testing\Fakes\EventFake;
 
 class Tracker
@@ -52,6 +53,7 @@ class Tracker
     /**
      * @param Application $app
      * @return void
+     * @throws BindingResolutionException
      */
     public static function start(Application $app): void
     {

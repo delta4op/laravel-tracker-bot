@@ -5,7 +5,7 @@ namespace Delta4op\Laravel\Tracker\Watchers;
 use Delta4op\Laravel\Tracker\Tracker;
 use Illuminate\Console\Events\ScheduledTaskStarting;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\ConsoleSchedule;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 
 class ConsoleScheduleWatcher extends Watcher
 {

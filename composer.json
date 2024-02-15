@@ -16,10 +16,11 @@
     ],
     "require": {
         "php": "^8.1",
+        "ext-pdo": "*",
         "hisorange/browser-detect": "^5.0",
         "illuminate/contracts": "^9.0",
-        "spatie/laravel-package-tools": "^1.14.0",
-        "ext-pdo": "*"
+        "mtdowling/cron-expression": "*",
+        "spatie/laravel-package-tools": "^1.14.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -72,7 +73,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Delta4op\\Laravel\\Tracker\\TrackerProvider"
+
             ],
             "aliases": {
 

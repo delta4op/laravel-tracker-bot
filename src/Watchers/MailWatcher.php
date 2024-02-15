@@ -4,7 +4,7 @@ namespace Delta4op\Laravel\Tracker\Watchers;
 
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\Mail;
 use Delta4op\Laravel\Tracker\Tracker;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 use Illuminate\Mail\Events\MessageSent;
 use Symfony\Component\Mime\Address;
 

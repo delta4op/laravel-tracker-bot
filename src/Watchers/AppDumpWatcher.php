@@ -6,7 +6,7 @@ use Delta4op\Laravel\Tracker\DB\Models\Metrics\Dump;
 use Delta4op\Laravel\Tracker\Tracker;
 use Exception;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Application;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\VarDumper;
