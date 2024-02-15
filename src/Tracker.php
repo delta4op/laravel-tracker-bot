@@ -4,7 +4,7 @@ namespace Delta4op\Laravel\Tracker;
 
 use Delta4op\Laravel\Tracker\DB\Models\Entry;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\MetricsModel;
-use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Testing\Fakes\EventFake;
 
 class Tracker

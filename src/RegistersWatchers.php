@@ -2,7 +2,8 @@
 
 namespace Delta4op\Laravel\Tracker;
 
-use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Foundation\Application;
 
 trait RegistersWatchers
 {
@@ -29,10 +30,11 @@ trait RegistersWatchers
      *
      * @param Application $app
      * @return void
+     * @throws BindingResolutionException
      */
     protected static function registerWatchers(Application $app): void
     {
-        foreach (config('tracker-bot.watchers') as $key => $watcher) {
+        foreach (config('tracker.watchers') as $key => $watcher) {
             if (is_string($key) && $watcher === false) {
                 continue;
             }
