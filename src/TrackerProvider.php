@@ -29,8 +29,8 @@ class TrackerProvider extends PackageServiceProvider
      */
     public function configurePackage(Package $package): void
     {
-        $package->name('tracker-bot')
-            ->hasConfigFile('tracker-bot')
+        $package->name('laravel-tracker-bot')
+            ->hasConfigFile('tracker')
             ->hasMigration('tracker_migrations');
     }
 

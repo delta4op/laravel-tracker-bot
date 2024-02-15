@@ -93,53 +93,53 @@ return [
      * from here
      */
     'watchers' => [
-        Delta4op\Laravel\TrackerBot\Watchers\AppRequestWatcher::class => [
+        Delta4op\Laravel\Tracker\Watchers\AppRequestWatcher::class => [
             'enabled' => env('TRACKER_APP_REQUEST_WATCHER', false),
             'size_limit' => env('TRACKER_RESPONSE_SIZE_LIMIT', 64),
             'ignore_http_methods' => [],
             'ignore_status_codes' => [],
         ],
 
-        Delta4op\Laravel\TrackerBot\Watchers\DbQueryWatcher::class => [
+        Delta4op\Laravel\Tracker\Watchers\DbQueryWatcher::class => [
             'enabled' => env('TRACKER_DB_QUERY_WATCHER', false),
             'ignore_packages' => true,
             'ignore_paths' => [],
             'slow' => 100,
         ],
 
-        Delta4op\Laravel\TrackerBot\Watchers\ConsoleCommandWatcher::class => [
+        Delta4op\Laravel\Tracker\Watchers\ConsoleCommandWatcher::class => [
             'enabled' => env('TRACKER_CONSOLE_COMMAND_WATCHER', false),
             'ignore' => [],
         ],
 
-        Delta4op\Laravel\TrackerBot\Watchers\AppErrorWatcher::class => [
+        Delta4op\Laravel\Tracker\Watchers\AppErrorWatcher::class => [
             'enabled' => env('TRACKER_APP_ERROR_WATCHER', false),
         ],
 
-        Delta4op\Laravel\TrackerBot\Watchers\CacheWatcher::class => [
+        Delta4op\Laravel\Tracker\Watchers\CacheWatcher::class => [
             'enabled' => env('TRACKER_CACHE_WATCHER', false),
             'hidden' => [],
         ],
 
-        Delta4op\Laravel\TrackerBot\Watchers\ConsoleScheduleWatcher::class => [
+        Delta4op\Laravel\Tracker\Watchers\ConsoleScheduleWatcher::class => [
             'enabled' => env('TRACKER_SCHEDULE_COMMAND_WATCHER', false),
         ],
 
-        Delta4op\Laravel\TrackerBot\Watchers\MailWatcher::class => [
+        Delta4op\Laravel\Tracker\Watchers\MailWatcher::class => [
             'enabled' => env('TRACKER_MAIL_WATCHER', false),
         ],
 
-        Delta4op\Laravel\TrackerBot\Watchers\EventWatcher::class => [
+        Delta4op\Laravel\Tracker\Watchers\EventWatcher::class => [
             'enabled' => env('TRACKER_EVENT_WATCHER', false),
             'ignore' => [],
         ],
 
-        Delta4op\Laravel\TrackerBot\Watchers\LogWatcher::class => [
+        Delta4op\Laravel\Tracker\Watchers\LogWatcher::class => [
             'enabled' => env('TRACKER_LOG_WATCHER', false),
             'ignore' => [],
         ],
 
-        Delta4op\Laravel\TrackerBot\Watchers\AppDumpWatcher::class => [
+        Delta4op\Laravel\Tracker\Watchers\AppDumpWatcher::class => [
             'enabled' => env('TRACKER_APP_DUMP_WATCHER', false),
             'always' => env('TRACKER_APP_DUMP_WATCHER_ALWAYS', false),
         ],

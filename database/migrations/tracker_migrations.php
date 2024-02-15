@@ -1,21 +1,21 @@
 <?php
 
-use Delta4op\Laravel\TrackerBot\DB\Models\AppEntry;
-use Delta4op\Laravel\TrackerBot\DB\Models\Environment;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppDump;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppError;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\Log;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\AppRequest;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\CacheEvent;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\ConsoleCommandLog;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\ConsoleSchedule;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\DbQuery;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\Event;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\Mail;
-use Delta4op\Laravel\TrackerBot\DB\Models\Metrics\RedisEvent;
-use Delta4op\Laravel\TrackerBot\DB\Models\Source;
-use Delta4op\Laravel\TrackerBot\Enums\CacheEventType;
-use Delta4op\Laravel\TrackerBot\Enums\HttpMethod;
+use Delta4op\Laravel\Tracker\DB\Models\AppEntry;
+use Delta4op\Laravel\Tracker\DB\Models\Environment;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppDump;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppError;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Log;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppRequest;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\CacheEvent;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\ConsoleCommandLog;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\ConsoleSchedule;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\DbQuery;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Event;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Mail;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\RedisEvent;
+use Delta4op\Laravel\Tracker\DB\Models\Source;
+use Delta4op\Laravel\Tracker\Enums\CacheEventType;
+use Delta4op\Laravel\Tracker\Enums\HttpMethod;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
@@ -237,7 +237,7 @@ return new class extends Migration
      */
     protected function redisEventSchema(): void
     {
-        $this->schemaBuilder()->create((new CacheEvent)->getTable(), function (Blueprint $table) {
+        $this->schemaBuilder()->create((new RedisEvent)->getTable(), function (Blueprint $table) {
 
             $this->commonTableConfigurationForMetrics($table);
 
