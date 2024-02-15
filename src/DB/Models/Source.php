@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property ?int $id
  * @property ?string $symbol
  *
- * @property Collection<AppEntry> $appEntries
+ * @property Collection<Entry> $appEntries
  * @property Collection<AppRequest> $appRequests
  */
 class Source extends BaseModel
@@ -27,7 +27,7 @@ class Source extends BaseModel
      */
     public function appEntries(): HasMany
     {
-        return $this->hasMany(AppEntry::class, 'source_id', 'id');
+        return $this->hasMany(Entry::class, 'source_id', 'id');
     }
 
     /**

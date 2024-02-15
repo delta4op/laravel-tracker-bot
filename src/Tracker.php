@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\Tracker;
 
-use Delta4op\Laravel\Tracker\DB\Models\AppEntry;
+use Delta4op\Laravel\Tracker\DB\Models\Entry;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\MetricsModel;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Testing\Fakes\EventFake;
@@ -66,9 +66,9 @@ class Tracker
 
     /**
      * @param MetricsModel $model
-     * @return AppEntry
+     * @return Entry
      */
-    public static function recordEntry(MetricsModel $model): AppEntry
+    public static function recordEntry(MetricsModel $model): Entry
     {
         // set family hash if not set already
         if (!$model->family_hash) {
@@ -78,7 +78,7 @@ class Tracker
         $source = Tracker::getSource();
         $environment = Tracker::getEnvironment();
 
-        $entry = new AppEntry;
+        $entry = new Entry;
         $entry->family_hash = $model->family_hash;
         $entry->source()->associate($source);
         $entry->env()->associate($environment);

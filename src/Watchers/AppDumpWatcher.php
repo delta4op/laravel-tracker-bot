@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\Tracker\Watchers;
 
-use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppDump;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Dump;
 use Delta4op\Laravel\Tracker\Tracker;
 use Exception;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
@@ -77,11 +77,11 @@ class AppDumpWatcher extends Watcher
 
     /**
      * @param string $content
-     * @return AppDump
+     * @return Dump
      */
-    protected function prepareAppDump(string $content): AppDump
+    protected function prepareAppDump(string $content): Dump
     {
-        $object = new AppDump;
+        $object = new Dump;
         $object->content = $content;
 
         return $object;

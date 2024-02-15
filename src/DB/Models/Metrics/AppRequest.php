@@ -3,7 +3,7 @@
 namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
 use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
-use Delta4op\Laravel\Tracker\DB\Models\AppEntry;
+use Delta4op\Laravel\Tracker\DB\Models\Entry;
 use Delta4op\Laravel\Tracker\DB\Models\Environment;
 use Delta4op\Laravel\Tracker\DB\Models\Source;
 use Delta4op\Laravel\Tracker\Enums\HttpMethod;

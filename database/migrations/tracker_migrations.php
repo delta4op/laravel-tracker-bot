@@ -1,9 +1,9 @@
 <?php
 
-use Delta4op\Laravel\Tracker\DB\Models\AppEntry;
+use Delta4op\Laravel\Tracker\DB\Models\Entry;
 use Delta4op\Laravel\Tracker\DB\Models\Environment;
-use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppDump;
-use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppError;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Dump;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Error;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\Log;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppRequest;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\CacheEvent;
@@ -51,16 +51,16 @@ return new class extends Migration
     {
         $this->schemaBuilder()->dropIfExists((new ConsoleSchedule)->getTable());
         $this->schemaBuilder()->dropIfExists((new AppRequest)->getTable());
-        $this->schemaBuilder()->dropIfExists((new AppError)->getTable());
+        $this->schemaBuilder()->dropIfExists((new Error)->getTable());
         $this->schemaBuilder()->dropIfExists((new DbQuery)->getTable());
         $this->schemaBuilder()->dropIfExists((new CacheEvent)->getTable());
         $this->schemaBuilder()->dropIfExists((new ConsoleCommandLog)->getTable());
-        $this->schemaBuilder()->dropIfExists((new AppEntry)->getTable());
+        $this->schemaBuilder()->dropIfExists((new Entry)->getTable());
         $this->schemaBuilder()->dropIfExists((new Environment)->getTable());
         $this->schemaBuilder()->dropIfExists((new Source)->getTable());
         $this->schemaBuilder()->dropIfExists((new RedisEvent)->getTable());
         $this->schemaBuilder()->dropIfExists((new Log)->getTable());
-        $this->schemaBuilder()->dropIfExists((new AppDump)->getTable());
+        $this->schemaBuilder()->dropIfExists((new Dump)->getTable());
         $this->schemaBuilder()->dropIfExists((new Event)->getTable());
         $this->schemaBuilder()->dropIfExists((new Mail)->getTable());
     }
@@ -96,7 +96,7 @@ return new class extends Migration
      */
     protected function appEntriesSchema(): void
     {
-        $this->schemaBuilder()->create((new AppEntry)->getTable(), function (Blueprint $table) {
+        $this->schemaBuilder()->create((new Entry)->getTable(), function (Blueprint $table) {
 
             // ids
             $table->bigIncrements('id');
@@ -170,7 +170,7 @@ return new class extends Migration
      */
     protected function appErrorSchema(): void
     {
-        $this->schemaBuilder()->create((new AppError)->getTable(), function (Blueprint $table) {
+        $this->schemaBuilder()->create((new Error)->getTable(), function (Blueprint $table) {
 
             $this->commonTableConfigurationForMetrics($table);
 
@@ -318,7 +318,7 @@ return new class extends Migration
      */
     protected function appDumpsSchema(): void
     {
-        $this->schemaBuilder()->create((new AppDump)->getTable(), function (Blueprint $table) {
+        $this->schemaBuilder()->create((new Dump)->getTable(), function (Blueprint $table) {
 
             $this->commonTableConfigurationForMetrics($table);
 
@@ -369,7 +369,7 @@ return new class extends Migration
             $table->jsonb('cc');
             $table->jsonb('bcc');
             $table->text('html')->nullable();
-            $table->text('html')->nullable();
+            $table->text('raw')->nullable();
 
             // timestamps
             $table->timestamps();
@@ -388,7 +388,7 @@ return new class extends Migration
 
         // relation - app_entries
         $table->bigInteger('entry_id');
-        $table->foreign('entry_id')->references('id')->on((new AppEntry)->getTable());
+        $table->foreign('entry_id')->references('id')->on((new Entry)->getTable());
         $table->uuid('entry_uuid');
         $table->uuid('batch_id');
 

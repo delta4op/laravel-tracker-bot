@@ -22,18 +22,18 @@ use Illuminate\Support\Str;
  * @property ?Environment $env
  * @method AppEntryEB query()
  */
-class AppEntry extends BaseModel
+class Entry extends BaseModel
 {
     use HasTimestamps;
 
-    protected $table = 'app_entries';
+    protected $table = 'entries';
 
     /**
      * The "booted" method of the model.
      */
     protected static function booted(): void
     {
-        static::creating(function (AppEntry $entry) {
+        static::creating(function (Entry $entry) {
 
             $entry->uuid = Str::orderedUuid()->toString();
 

@@ -7,11 +7,11 @@ use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
 /**
  * @property ?string $content
  */
-class AppDump extends MetricsModel
+class Dump extends MetricsModel
 {
     use HasTimestamps;
 
-    protected $table = 'app_dumps';
+    protected $table = 'dumps';
 
     /**
      * @return string

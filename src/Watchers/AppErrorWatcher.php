@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\Tracker\Watchers;
 
-use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppError;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Error;
 use Delta4op\Laravel\Tracker\Helpers\FileHelpers;
 use Delta4op\Laravel\Tracker\Support\ExceptionContext;
 use Delta4op\Laravel\Tracker\Tracker;
@@ -39,11 +39,11 @@ class AppErrorWatcher extends Watcher
 
     /**
      * @param MessageLogged $event
-     * @return AppError|null
+     * @return Error|null
      */
-    protected function prepareAppError(MessageLogged $event): ?AppError
+    protected function prepareAppError(MessageLogged $event): ?Error
     {
-        $appError = new AppError;
+        $appError = new Error;
 
         /** @var Throwable $exception */
         $exception = $event->context['exception'];

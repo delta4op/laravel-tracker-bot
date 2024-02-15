@@ -2,8 +2,8 @@
 
 namespace Delta4op\Laravel\Tracker;
 
-use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppDump;
-use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppError;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Dump;
+use Delta4op\Laravel\Tracker\DB\Models\Metrics\Error;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\ClientRequest;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\Event;
 use Delta4op\Laravel\Tracker\DB\Models\Metrics\Log;
@@ -50,9 +50,9 @@ class TrackerProvider extends PackageServiceProvider
     public function enableAppEntryTableMorphMaps(): void
     {
         Relation::morphMap([
-            AppEntryType::APP_DUMP->value => AppDump::class,
-            AppEntryType::APP_ERROR->value => AppError::class,
-            AppEntryType::APP_REQUEST->value => AppRequest::class,
+            AppEntryType::DUMP->value => Dump::class,
+            AppEntryType::ERROR->value => Error::class,
+            AppEntryType::REQUEST->value => AppRequest::class,
             AppEntryType::CACHE_EVENT->value => CacheEvent::class,
             AppEntryType::CLIENT_REQUEST->value => ClientRequest::class,
             AppEntryType::CONSOLE_COMMAND->value => ConsoleCommandLog::class,

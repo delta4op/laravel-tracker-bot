@@ -3,7 +3,7 @@
 namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
 use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
-use Delta4op\Laravel\Tracker\DB\Models\AppEntry;
+use Delta4op\Laravel\Tracker\DB\Models\Entry;
 use Delta4op\Laravel\Tracker\DB\Models\BaseModel;
 use Delta4op\Laravel\Tracker\DB\Models\Environment;
 use Delta4op\Laravel\Tracker\DB\Models\Source;
@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
  * @property ?int $source_id
  * @property ?int $env_id
  *
- * @property ?AppEntry $appEntry
+ * @property ?Entry $appEntry
  * @property ?Source $source
  * @property ?Environment $env
  */
@@ -48,7 +48,7 @@ abstract class MetricsModel extends BaseModel
 
     public function appEntry(): MorphOne
     {
-        return $this->morphOne(AppEntry::class, 'entry_id', 'model_key', 'model_id');
+        return $this->morphOne(Entry::class, 'entry_id', 'model_key', 'model_id');
     }
 
 

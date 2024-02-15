@@ -15,11 +15,11 @@ use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
  * @property ?array $trace
  * @property ?array $linePreview
  */
-class AppError extends MetricsModel
+class Error extends MetricsModel
 {
     use HasTimestamps;
 
-    protected $table = 'app_errors';
+    protected $table = 'errors';
 
     protected $casts = [
         'context' => 'array',

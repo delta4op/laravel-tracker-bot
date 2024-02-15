@@ -4,17 +4,17 @@ namespace Delta4op\Laravel\Tracker\Enums;
 
 enum AppEntryType: string
 {
-    case APP_REQUEST = 'APP_REQUEST';
+    case REQUEST = 'REQUEST';
     case CLIENT_REQUEST = 'CLIENT_REQUEST';
     case CACHE_EVENT = 'CACHE_EVENT';
     case DB_QUERY = 'DB_QUERY';
     case LOG = 'APP_LOG';
     case CONSOLE_COMMAND = 'CONSOLE_COMMAND';
-    case APP_ERROR = 'APP_ERROR';
+    case ERROR = 'ERROR';
     case CONSOLE_SCHEDULE = 'COMMAND_SCHEDULE';
     case EVENT = 'EVENT';
     case REDIS_EVENT = 'REDIS_EVENT';
     case MAIL = 'MAIL';
     case MODEL = 'MODEL';
-    case APP_DUMP = 'APP_DUMP';
+    case DUMP = 'DUMP';
 }
