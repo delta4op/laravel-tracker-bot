@@ -306,7 +306,6 @@ return new class extends Migration
             $table->string('command');
             $table->text('description');
             $table->string('expression');
-            $table->string('expression');
             $table->string('timezone');
             $table->jsonb('config')->nullable();
 
@@ -409,7 +408,7 @@ return new class extends Migration
     protected function schemaBuilder(): Builder
     {
         return Schema::connection(
-            config('tracker-bot.storage.database.connection')
+            config('tracker.storage.database.connection')
         );
     }
 };

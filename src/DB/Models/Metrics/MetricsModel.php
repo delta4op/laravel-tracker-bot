@@ -65,7 +65,7 @@ abstract class MetricsModel extends BaseModel
      */
     public function env(): BelongsTo
     {
-        return $this->belongsTo(Source::class, 'env_id', 'id');
+        return $this->belongsTo(Environment::class, 'env_id', 'id');
     }
 
     /**
