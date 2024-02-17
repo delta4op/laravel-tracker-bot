@@ -101,19 +101,19 @@ return new class extends Migration
 
             // ids
             $table->bigIncrements('id');
-            $table->uuid();
-            $table->uuid('batchId');
+            $table->uuid()->unique();
+            $table->uuid('batchId')->index();
 
             // relation - sources
-            $table->unsignedTinyInteger('source_id');
+            $table->unsignedTinyInteger('source_id')->unique();
             $table->foreign('source_id')->references('id')->on((new Source)->getTable());
 
             // relation - environments
-            $table->unsignedTinyInteger('env_id');
+            $table->unsignedTinyInteger('env_id')->unique();
             $table->foreign('env_id')->references('id')->on((new Environment)->getTable());
 
             // hash
-            $table->string('family_hash', 32);
+            $table->string('family_hash', 32)->unique();
 
             $table->string('model_key', 150)->nullable();
             $table->unsignedBigInteger('model_id')->nullable();
@@ -384,21 +384,21 @@ return new class extends Migration
     protected function commonTableConfigurationForMetrics(Blueprint $table): void
     {
         $table->bigIncrements('id');
-        $table->uuid();
+        $table->uuid()->unique();
         $table->string('family_hash', 32);
 
         // relation - app_entries
-        $table->bigInteger('entry_id');
+        $table->bigInteger('entry_id')->index();
         $table->foreign('entry_id')->references('id')->on((new Entry)->getTable());
         $table->uuid('entry_uuid');
         $table->uuid('batch_id');
 
         // relation - sources
-        $table->unsignedTinyInteger('source_id');
+        $table->unsignedTinyInteger('source_id')->index();
         $table->foreign('source_id')->references('id')->on((new Source)->getTable());
 
         // relation - environments
-        $table->unsignedTinyInteger('env_id');
+        $table->unsignedTinyInteger('env_id')->index();
         $table->foreign('env_id')->references('id')->on((new Environment)->getTable());
     }
 

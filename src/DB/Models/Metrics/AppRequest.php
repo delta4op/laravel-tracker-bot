@@ -3,9 +3,8 @@
 namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
 use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
-use Delta4op\Laravel\Tracker\DB\Models\Entry;
-use Delta4op\Laravel\Tracker\DB\Models\Environment;
-use Delta4op\Laravel\Tracker\DB\Models\Source;
+use Delta4op\Laravel\Tracker\DB\EloquentBuilders\AppRequestEB;
+use Delta4op\Laravel\Tracker\DB\EloquentRepositories\AppRequestER;
 use Delta4op\Laravel\Tracker\Enums\HttpMethod;
 
 /**
@@ -34,6 +33,8 @@ use Delta4op\Laravel\Tracker\Enums\HttpMethod;
  *
  * @property ?string $controller_class
  * @property ?string $controller_action
+ *
+ * @method static AppRequestEB query()
  */
 class AppRequest extends MetricsModel
 {
@@ -61,5 +62,22 @@ class AppRequest extends MetricsModel
             ($this->full_url ?? ''),
             ($this->content ?? '')
         );
+    }
+
+    /**
+     * @param $query
+     * @return AppRequestEB
+     */
+    public function newEloquentBuilder($query): AppRequestEB
+    {
+        return new AppRequestEB($query);
+    }
+
+    /**
+     * @return AppRequestER
+     */
+    public static function repository(): AppRequestER
+    {
+        return new AppRequestER;
     }
 }

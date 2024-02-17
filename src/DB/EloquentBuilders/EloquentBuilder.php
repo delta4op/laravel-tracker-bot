@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\Tracker\DB\EloquentBuilders;
 
-use Jenssegers\Mongodb\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class EloquentBuilder extends Builder
 {
