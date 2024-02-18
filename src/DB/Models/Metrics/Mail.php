@@ -3,6 +3,8 @@
 namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
 use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\DB\EloquentBuilders\MailEB;
+use Delta4op\Laravel\Tracker\DB\EloquentRepositories\MailER;
 
 /**
  * @property ?string $subject
@@ -15,6 +17,8 @@ use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
  * @property ?string[] $bcc
  * @property ?string $html
  * @property ?string $raw
+ *
+ * @method static MailEB query()
  */
 class Mail extends MetricsModel
 {
@@ -38,5 +42,22 @@ class Mail extends MetricsModel
         return md5(
             ($this->subject ?? '')
         );
+    }
+
+    /**
+     * @param $query
+     * @return MailEB
+     */
+    public function newEloquentBuilder($query): MailEB
+    {
+        return new MailEB($query);
+    }
+
+    /**
+     * @return MailER
+     */
+    public static function repository(): MailER
+    {
+        return new MailER;
     }
 }

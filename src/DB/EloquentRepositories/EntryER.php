@@ -2,7 +2,7 @@
 
 namespace Delta4op\Laravel\Tracker\DB\EloquentRepositories;
 
-class AppEntryER extends EloquentRepository
+class EntryER extends EloquentRepository
 {
 
 }

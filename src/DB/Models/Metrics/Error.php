@@ -3,6 +3,8 @@
 namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
 use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\DB\EloquentBuilders\ErrorEB;
+use Delta4op\Laravel\Tracker\DB\EloquentRepositories\ErrorER;
 
 /**
  * @property ?string $class
@@ -14,6 +16,8 @@ use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
  * @property ?array $context
  * @property ?array $trace
  * @property ?array $linePreview
+ *
+ * @method static ErrorEB query()
  */
 class Error extends MetricsModel
 {
@@ -38,5 +42,22 @@ class Error extends MetricsModel
             ($this->message ?? '') .
             ($this->code ?? '')
         );
+    }
+
+    /**
+     * @param $query
+     * @return ErrorEB
+     */
+    public function newEloquentBuilder($query): ErrorEB
+    {
+        return new ErrorEB($query);
+    }
+
+    /**
+     * @return ErrorER
+     */
+    public static function repository(): ErrorER
+    {
+        return new ErrorER;
     }
 }

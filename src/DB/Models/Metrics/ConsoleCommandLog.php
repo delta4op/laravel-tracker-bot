@@ -3,6 +3,8 @@
 namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
 use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\DB\EloquentBuilders\ConsoleCommandEB;
+use Delta4op\Laravel\Tracker\DB\EloquentRepositories\ConsoleCommandER;
 
 /**
  * @property ?string $command
@@ -10,6 +12,8 @@ use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
  * @property ?int $exitCode
  * @property ?array $arguments
  * @property ?array $options
+ *
+ * @method static ConsoleCommandEB query()
  */
 class ConsoleCommandLog extends MetricsModel
 {
@@ -28,5 +32,22 @@ class ConsoleCommandLog extends MetricsModel
     public function calculateFamilyHash(): string
     {
         return md5($this->command ?? '');
+    }
+
+    /**
+     * @param $query
+     * @return ConsoleCommandEB
+     */
+    public function newEloquentBuilder($query): ConsoleCommandEB
+    {
+        return new ConsoleCommandEB($query);
+    }
+
+    /**
+     * @return ConsoleCommandER
+     */
+    public static function repository(): ConsoleCommandER
+    {
+        return new ConsoleCommandER;
     }
 }

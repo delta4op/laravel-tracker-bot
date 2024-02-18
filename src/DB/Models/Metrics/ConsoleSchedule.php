@@ -3,6 +3,8 @@
 namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
 use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\DB\EloquentBuilders\ConsoleScheduleEB;
+use Delta4op\Laravel\Tracker\DB\EloquentRepositories\ConsoleScheduleER;
 
 /**
  * @property ?string $command
@@ -11,6 +13,8 @@ use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
  * @property ?string $timezone
  * @property ?string $output
  * @property ?array $config
+ *
+ * @method static ConsoleScheduleEB query()
  */
 class ConsoleSchedule extends MetricsModel
 {
@@ -31,5 +35,22 @@ class ConsoleSchedule extends MetricsModel
             ($this->command ?? '') .
             ($this->expression ?? '')
         );
+    }
+
+    /**
+     * @param $query
+     * @return ConsoleScheduleEB
+     */
+    public function newEloquentBuilder($query): ConsoleScheduleEB
+    {
+        return new ConsoleScheduleEB($query);
+    }
+
+    /**
+     * @return ConsoleScheduleER
+     */
+    public static function repository(): ConsoleScheduleER
+    {
+        return new ConsoleScheduleER;
     }
 }

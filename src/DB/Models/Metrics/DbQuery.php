@@ -3,6 +3,8 @@
 namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
 use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\DB\EloquentBuilders\DbQueryEB;
+use Delta4op\Laravel\Tracker\DB\EloquentRepositories\DbQueryER;
 use Delta4op\Laravel\Tracker\Enums\Database;
 
 /**
@@ -15,6 +17,8 @@ use Delta4op\Laravel\Tracker\Enums\Database;
  * @property ?boolean $is_internal_file
  * @property ?int $line
  * @property ?array $bindings
+ *
+ * @method static DbQueryEB query()
  */
 class DbQuery extends MetricsModel
 {
@@ -33,5 +37,22 @@ class DbQuery extends MetricsModel
     public function calculateFamilyHash(): string
     {
         return md5($this->query ?? '');
+    }
+
+    /**
+     * @param $query
+     * @return DbQueryEB
+     */
+    public function newEloquentBuilder($query): DbQueryEB
+    {
+        return new DbQueryEB($query);
+    }
+
+    /**
+     * @return DbQueryER
+     */
+    public static function repository(): DbQueryER
+    {
+        return new DbQueryER;
     }
 }

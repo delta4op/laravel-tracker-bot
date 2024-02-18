@@ -3,6 +3,8 @@
 namespace Delta4op\Laravel\Tracker\DB\Models\Metrics;
 
 use Delta4op\Laravel\Tracker\DB\Concerns\HasTimestamps;
+use Delta4op\Laravel\Tracker\DB\EloquentBuilders\ClientRequestEB;
+use Delta4op\Laravel\Tracker\DB\EloquentRepositories\ClientRequestER;
 use Delta4op\Laravel\Tracker\Enums\HttpMethod;
 
 /**
@@ -17,6 +19,8 @@ use Delta4op\Laravel\Tracker\Enums\HttpMethod;
  * @property ?int $response_status
  *
  * @property ?float $duration
+ *
+ * @method static ClientRequestEB query()
  */
 class ClientRequest extends MetricsModel
 {
@@ -38,5 +42,22 @@ class ClientRequest extends MetricsModel
             ($this->method ?? '')
             ($this->url ?? '')
         );
+    }
+
+    /**
+     * @param $query
+     * @return ClientRequestEB
+     */
+    public function newEloquentBuilder($query): ClientRequestEB
+    {
+        return new ClientRequestEB($query);
+    }
+
+    /**
+     * @return ClientRequestER
+     */
+    public static function repository(): ClientRequestER
+    {
+        return new ClientRequestER;
     }
 }
