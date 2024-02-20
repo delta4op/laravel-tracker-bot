@@ -137,6 +137,7 @@ return new class extends Migration
             $table->enum('method', HttpMethod::values());
             $table->string('host');
             $table->string('path');
+            $table->string('path_template');
             $table->string('url');
             $table->text('full_url');
             $table->text('query_string')->nullable();

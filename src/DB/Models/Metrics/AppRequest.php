@@ -13,6 +13,7 @@ use Delta4op\Laravel\Tracker\Enums\HttpMethod;
  * @property ?HttpMethod $method
  * @property ?string $host
  * @property ?string $path
+ * @property ?string $path_template
  * @property ?string $url
  * @property ?string $full_url
  * @property ?string $query_string

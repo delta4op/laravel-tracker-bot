@@ -12,6 +12,7 @@ use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -57,6 +58,7 @@ class AppRequestWatcher extends Watcher
         $appRequest->method = HttpMethod::tryFrom(Str::upper($event->request->getMethod()));
         $appRequest->host = $event->request->host();
         $appRequest->path = $event->request->path();
+        $appRequest->path_template = Route::current()->uri();
         $appRequest->url = $event->request->url();
         $appRequest->full_url = $event->request->fullUrl();
         $appRequest->query_string = $event->request->getQueryString();
