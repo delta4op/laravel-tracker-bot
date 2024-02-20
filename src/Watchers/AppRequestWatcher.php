@@ -6,7 +6,6 @@ use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppRequest;
 use Delta4op\Laravel\Tracker\Enums\HttpMethod;
 use Delta4op\Laravel\Tracker\Tracker;
 use Delta4op\Laravel\Tracker\Support\FormatModel;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Events\RequestHandled;
@@ -79,8 +78,11 @@ class AppRequestWatcher extends Watcher
         $appRequest->memory = round(memory_get_peak_usage(true) / 1024, 2);
 
         try {
-            $appRequest->path_template = Route::current()->uri();
-        } catch(Throwable) {
+            $appRequest->path_template = Route::current()?->uri();
+        } catch(Throwable) {}
+
+
+        if(!$appRequest->path_template) {
             $appRequest->path_template = $appRequest->path;
         }
 
