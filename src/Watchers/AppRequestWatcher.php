@@ -6,6 +6,7 @@ use Delta4op\Laravel\Tracker\DB\Models\Metrics\AppRequest;
 use Delta4op\Laravel\Tracker\Enums\HttpMethod;
 use Delta4op\Laravel\Tracker\Tracker;
 use Delta4op\Laravel\Tracker\Support\FormatModel;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Events\RequestHandled;
@@ -58,7 +59,6 @@ class AppRequestWatcher extends Watcher
         $appRequest->method = HttpMethod::tryFrom(Str::upper($event->request->getMethod()));
         $appRequest->host = $event->request->host();
         $appRequest->path = $event->request->path();
-        $appRequest->path_template = Route::current()->uri();
         $appRequest->url = $event->request->url();
         $appRequest->full_url = $event->request->fullUrl();
         $appRequest->query_string = $event->request->getQueryString();
@@ -76,6 +76,12 @@ class AppRequestWatcher extends Watcher
 
         $appRequest->duration = $startTime ? floor((microtime(true) - $startTime) * 1000) : null;
         $appRequest->memory = round(memory_get_peak_usage(true) / 1024 / 1024, 1);
+
+        try {
+            $appRequest->path_template = Route::current()->uri();
+        } catch(Exception) {
+            $appRequest->path_template = $appRequest->path;
+        }
 
         try {
             $appRequest->controller_action = $event->request->route()?->getActionName();
