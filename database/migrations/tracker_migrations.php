@@ -227,7 +227,7 @@ return new class extends Migration
 
             // query data
             $table->enum('type', CacheEventType::values());
-            $table->string('key');
+            $table->text('key');
             $table->text('value')->nullable();
 
             // timestamps
