@@ -35,6 +35,7 @@ class AppRequestWatcher extends Watcher
     {
         if (
             !Tracker::isRecording() ||
+            !$this->isWatcherEnabled() ||
             $this->shouldIgnoreHttpMethod($event) ||
             $this->shouldIgnoreStatusCode($event)) {
             return;
