@@ -20,7 +20,7 @@ return [
     | ...
     |
     */
-    'env' => env('TRACKER_ENV', env('app.env', 'DEFAULT')),
+    'env' => env('TRACKER_ENV', config('app.env', 'DEFAULT')),
 
     /*
     |--------------------------------------------------------------------------

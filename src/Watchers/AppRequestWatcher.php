@@ -75,7 +75,7 @@ class AppRequestWatcher extends Watcher
         $appRequest->response_headers = $this->headers($event->response->headers->all());
 
         $appRequest->duration = $startTime ? floor((microtime(true) - $startTime) * 1000) : null;
-        $appRequest->memory = round(memory_get_peak_usage(true) / 1024 / 1024, 1);
+        $appRequest->memory = round(memory_get_peak_usage(true) / 1024, 2);
 
         try {
             $appRequest->path_template = Route::current()->uri();
