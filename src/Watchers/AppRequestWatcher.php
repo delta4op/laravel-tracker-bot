@@ -80,7 +80,7 @@ class AppRequestWatcher extends Watcher
 
         try {
             $appRequest->path_template = Route::current()->uri();
-        } catch(Exception) {
+        } catch(Throwable) {
             $appRequest->path_template = $appRequest->path;
         }
 
