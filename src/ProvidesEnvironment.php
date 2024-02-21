@@ -3,7 +3,6 @@
 namespace Delta4op\Laravel\Tracker;
 
 use Delta4op\Laravel\Tracker\DB\Models\Environment;
-use Illuminate\Support\Str;
 
 trait ProvidesEnvironment
 {
@@ -12,7 +11,7 @@ trait ProvidesEnvironment
      */
     public static function getEnvironment(): ?Environment
     {
-        $envSymbol = Str::upper(Tracker::config()['env'] ?? 'DEFAULT');
+        $envSymbol = Tracker::config()['env'] ?? 'default';
 
         /** @var ?Environment */
         return Environment::query()->firstOrCreate([

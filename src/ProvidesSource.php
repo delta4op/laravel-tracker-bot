@@ -3,7 +3,6 @@
 namespace Delta4op\Laravel\Tracker;
 
 use Delta4op\Laravel\Tracker\DB\Models\Source;
-use Illuminate\Support\Str;
 
 trait ProvidesSource
 {
@@ -12,7 +11,7 @@ trait ProvidesSource
      */
     public static function getSource(): ?Source
     {
-        $sourceSymbol = Str::upper(Tracker::config()['source'] ?? 'MASTER');
+        $sourceSymbol = Tracker::config()['source'] ?? 'main';
 
         /** @var ?Source */
         return Source::query()->firstOrCreate([
