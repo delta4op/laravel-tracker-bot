@@ -105,15 +105,15 @@ return new class extends Migration
             $table->uuid('batchId')->index();
 
             // relation - sources
-            $table->unsignedTinyInteger('source_id')->unique();
+            $table->unsignedTinyInteger('source_id')->index();
             $table->foreign('source_id')->references('id')->on((new Source)->getTable());
 
             // relation - environments
-            $table->unsignedTinyInteger('env_id')->unique();
+            $table->unsignedTinyInteger('env_id')->index();
             $table->foreign('env_id')->references('id')->on((new Environment)->getTable());
 
             // hash
-            $table->string('family_hash', 32)->unique();
+            $table->string('family_hash', 32)->index();
 
             $table->string('model_key', 150)->nullable();
             $table->unsignedBigInteger('model_id')->nullable();
